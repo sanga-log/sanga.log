@@ -1,0 +1,96 @@
+---
+title: "React 19 Actions — 폼 처리의 패러다임이 바뀐다"
+excerpt: "React 19에서 도입된 Actions와 useActionState, useFormStatus 훅을 통해 기존 폼 처리 방식이 어떻게 달라지는지 실제 코드와 함께 살펴봅니다. 서버 액션과 클라이언트 액션의 차이, 낙관적 업데이트까지 정리했습니다."
+date: "2026-02-20"
+category: "React"
+tags: ["React", "React 19", "Server Actions", "Forms"]
+---
+
+## 들어가며
+
+React 19가 정식 출시되면서 가장 주목받는 기능 중 하나가 바로 **Actions**입니다. 기존에 폼(Form)을 다루기 위해 `useState`와 `useEffect`를 조합해서 쓰던 방식이 훨씬 단순해졌습니다.
+
+## 기존 방식의 문제점
+
+```typescript
+// 기존: 직접 상태 관리
+const [isPending, setIsPending] = useState(false);
+const [error, setError] = useState<string | null>(null);
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsPending(true);
+  try {
+    await submitForm(data);
+  } catch (err) {
+    setError('제출에 실패했습니다.');
+  } finally {
+    setIsPending(false);
+  }
+};
+```
+
+## React 19 Actions
+
+```typescript
+// React 19: useActionState 활용
+import { useActionState } from 'react';
+
+async function submitAction(prevState: State, formData: FormData) {
+  const name = formData.get('name') as string;
+
+  try {
+    await createUser(name);
+    return { success: true, error: null };
+  } catch {
+    return { success: false, error: '제출에 실패했습니다.' };
+  }
+}
+
+function MyForm() {
+  const [state, action, isPending] = useActionState(submitAction, {
+    success: false,
+    error: null,
+  });
+
+  return (
+    <form action={action}>
+      <input name="name" />
+      {state.error && <p>{state.error}</p>}
+      <button disabled={isPending}>
+        {isPending ? '제출 중...' : '제출'}
+      </button>
+    </form>
+  );
+}
+```
+
+## useFormStatus
+
+`useFormStatus`는 폼의 제출 상태를 자식 컴포넌트에서 쉽게 읽을 수 있게 해줍니다.
+
+```typescript
+import { useFormStatus } from 'react-dom';
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button disabled={pending}>
+      {pending ? '처리 중...' : '제출하기'}
+    </button>
+  );
+}
+```
+
+## 낙관적 업데이트: useOptimistic
+
+```typescript
+const [optimisticLikes, addOptimisticLike] = useOptimistic(
+  likes,
+  (state, newLike) => [...state, newLike]
+);
+```
+
+## 마치며
+
+React 19의 Actions는 단순히 문법 설탕(syntactic sugar)이 아닙니다. 비동기 상태 관리의 복잡성을 프레임워크 레벨에서 흡수하는 방향으로 진화한 것입니다. 특히 Next.js의 Server Actions와 함께 사용하면 full-stack 데이터 뮤테이션을 매우 직관적으로 구현할 수 있습니다.
