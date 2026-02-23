@@ -34,7 +34,7 @@ export default async function PostPage({ params }: PageProps) {
     <div className="max-w-3xl mx-auto px-6 py-16">
       {/* 뒤로가기 */}
       <Link
-        href="/"
+        href="/blog"
         className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-gray-400 hover:text-black transition-colors mb-12"
       >
         ← BACK
@@ -78,7 +78,7 @@ export default async function PostPage({ params }: PageProps) {
       {/* 하단 */}
       <footer className="mt-20 pt-10 border-t border-black">
         <Link
-          href="/"
+          href="/blog"
           className="inline-flex items-center gap-2 text-sm font-black tracking-widest uppercase hover:opacity-50 transition-opacity"
         >
           ← 목록으로

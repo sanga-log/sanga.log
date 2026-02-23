@@ -59,7 +59,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
       <ul>
         {filteredPosts.map((post) => (
           <li key={post.slug} className="border-b border-black">
-            <Link href={`/posts/${post.slug}`} className="group block py-12">
+            <Link href={`/blog/${post.slug}`} className="group block py-12">
               <h2 className="text-3xl font-black leading-tight tracking-tight mb-3 group-hover:opacity-50 transition-opacity">
                 {post.title}
               </h2>
