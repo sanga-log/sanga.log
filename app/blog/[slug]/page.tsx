@@ -4,6 +4,9 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import remarkGfm from 'remark-gfm';
+import MdxComponents from '@/components/MdxComponents';
+import TypewriterTitle from '@/components/TypewriterTitle';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -19,7 +22,7 @@ export async function generateMetadata({ params }: PageProps) {
   const post = getPostBySlug(slug);
   if (!post) return {};
   return {
-    title: `${post.title} — 산가리의 테크블로그`,
+    title: `${post.title} — sanga-log`,
     description: post.excerpt,
   };
 }
@@ -51,9 +54,10 @@ export default async function PostPage({ params }: PageProps) {
             {format(new Date(post.date), 'yyyy. MM. dd', { locale: ko })}
           </span>
         </div>
-        <h1 className="text-4xl font-black leading-tight tracking-tight mb-6">
-          {post.title}
-        </h1>
+        <TypewriterTitle
+          text={post.title}
+          className="text-4xl font-black leading-tight tracking-tight mb-6"
+        />
         <p className="text-base text-gray-500 leading-relaxed">{post.excerpt}</p>
 
         {post.tags && post.tags.length > 0 && (
@@ -72,7 +76,7 @@ export default async function PostPage({ params }: PageProps) {
 
       {/* 본문 */}
       <article className="prose">
-        <MDXRemote source={post.content} />
+        <MDXRemote source={post.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} components={MdxComponents} />
       </article>
 
       {/* 하단 */}

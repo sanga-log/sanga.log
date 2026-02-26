@@ -1,0 +1,32 @@
+---
+description: 프로젝트 전반 컨벤션 (Next.js App Router 기반 블로그)
+alwaysApply: true
+---
+
+# 프로젝트 컨벤션
+
+## 기술 스택
+- Next.js 16 (App Router), React 19, TypeScript 5
+- Tailwind CSS v4, MDX (next-mdx-remote)
+- 블로그 콘텐츠는 `content/blogs/` 디렉토리에 `.mdx` 파일로 관리
+
+## 라우팅 구조
+- `/` → 메인 페이지
+- `/blog` → 포스트 목록
+- `/blog/[slug]` → 포스트 상세
+- `/resume` → 이력서
+- `/contact` → 연락처
+
+## 파일 배치 원칙
+- 페이지 컴포넌트: `app/` (Next.js App Router 구조 따름)
+- 재사용 컴포넌트: `components/`
+- 유틸/데이터 로직: `lib/`
+- 콘텐츠(MDX): `content/`
+
+## 커밋 메시지 형식
+```
+type: 제목 (한글)
+
+- 변경 내용 상세 (bullet)
+```
+type: feat | fix | refactor | style | docs | chore

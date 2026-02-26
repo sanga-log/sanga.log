@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d0d1c"/>
+      <stop offset="100%" style="stop-color:#1a1030"/>
+    </linearGradient>
+    <linearGradient id="accentG" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#cc785c"/>
+      <stop offset="100%" style="stop-color:#e8a87c"/>
+    </linearGradient>
+    <filter id="sh2">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="300" fill="url(#bg2)" rx="16"/>
+
+  <text x="450" y="38" text-anchor="middle" font-family="-apple-system, 'Helvetica Neue', sans-serif" font-size="15" fill="#6a6a8a" letter-spacing="2">스킬 공유 흐름</text>
+
+  <!-- Step 1: Create -->
+  <g filter="url(#sh2)">
+    <rect x="40" y="60" width="180" height="180" rx="12" fill="#1c1c32" stroke="#cc785c" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <rect x="40" y="60" width="180" height="46" rx="12" fill="#2a1e14" opacity="0.9"/>
+  <rect x="40" y="88" width="180" height="18" fill="#2a1e14" opacity="0.9"/>
+  <text x="130" y="90" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" fill="#cc785c" font-weight="600">① 스킬 만들기</text>
+  <text x="130" y="130" text-anchor="middle" font-family="monospace" font-size="28" fill="#cc785c" opacity="0.7">📄</text>
+  <text x="130" y="168" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11.5" fill="#8a7a6a">SKILL.md 파일 작성</text>
+  <text x="130" y="186" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11.5" fill="#8a7a6a">(업무 절차를 글로)</text>
+  <text x="130" y="222" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10" fill="#5a4a3a">Claude와 함께 만들면 OK</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="224" y1="150" x2="288" y2="150" stroke="#cc785c" stroke-width="2" stroke-opacity="0.6" stroke-dasharray="5,3"/>
+  <polygon points="286,143 300,150 286,157" fill="#cc785c" opacity="0.7"/>
+
+  <!-- Step 2: Share -->
+  <g filter="url(#sh2)">
+    <rect x="305" y="60" width="180" height="180" rx="12" fill="#1c1c32" stroke="#7c6bcc" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <rect x="305" y="60" width="180" height="46" rx="12" fill="#1e1a2e" opacity="0.9"/>
+  <rect x="305" y="88" width="180" height="18" fill="#1e1a2e" opacity="0.9"/>
+  <text x="395" y="90" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" fill="#a090ee" font-weight="600">② 파일 공유하기</text>
+  <text x="395" y="130" text-anchor="middle" font-family="monospace" font-size="28" fill="#7c6bcc" opacity="0.7">📤</text>
+  <text x="395" y="168" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11.5" fill="#7a7a9a">슬랙 / 노션 / 메일로</text>
+  <text x="395" y="186" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11.5" fill="#7a7a9a">SKILL.md 파일 전달</text>
+  <text x="395" y="222" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10" fill="#4a4a6a">그냥 텍스트 파일이라 가볍게!</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="489" y1="150" x2="553" y2="150" stroke="#cc785c" stroke-width="2" stroke-opacity="0.6" stroke-dasharray="5,3"/>
+  <polygon points="551,143 565,150 551,157" fill="#cc785c" opacity="0.7"/>
+
+  <!-- Step 3: Apply -->
+  <g filter="url(#sh2)">
+    <rect x="570" y="60" width="180" height="180" rx="12" fill="#1c1c32" stroke="#6bcb77" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <rect x="570" y="60" width="180" height="46" rx="12" fill="#0f2018" opacity="0.9"/>
+  <rect x="570" y="88" width="180" height="18" fill="#0f2018" opacity="0.9"/>
+  <text x="660" y="90" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" fill="#6bcb77" font-weight="600">③ 내 Claude에 적용</text>
+  <text x="660" y="130" text-anchor="middle" font-family="monospace" font-size="28" fill="#6bcb77" opacity="0.7">⚙️</text>
+  <text x="660" y="162" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11.5" fill="#5a8a6a">Claude 설정 →</text>
+  <text x="660" y="180" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11.5" fill="#5a8a6a">Skills 탭 → 파일 업로드</text>
+  <text x="660" y="222" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10" fill="#3a5a3a">이후 자동으로 인식됨!</text>
+
+  <!-- Arrow 3→Use -->
+  <line x1="754" y1="150" x2="818" y2="150" stroke="#cc785c" stroke-width="2" stroke-opacity="0.6" stroke-dasharray="5,3"/>
+  <polygon points="816,143 830,150 816,157" fill="#cc785c" opacity="0.7"/>
+
+  <!-- Step 4: Use -->
+  <g filter="url(#sh2)">
+    <rect x="835" y="100" width="44" height="100" rx="22" fill="#1c1c32" stroke="url(#accentG)" stroke-width="1.5"/>
+  </g>
+  <text x="857" y="148" text-anchor="middle" font-family="monospace" font-size="24" fill="#cc785c">✦</text>
+  <text x="857" y="168" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="9" fill="#cc785c" letter-spacing="0.5">사용!</text>
+
+  <!-- Bottom note -->
+  <text x="450" y="272" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" fill="#4a4a6a">스킬 파일은 단순한 텍스트 문서 —  팀 전체가 동일한 방식으로 자동화를 활용할 수 있어요</text>
+</svg>
