@@ -44,7 +44,7 @@ export default async function PostPage({ params }: PageProps) {
       </Link>
 
       {/* 포스트 헤더 */}
-      <header className="mb-16 border-b border-black pb-10">
+      <header className="mb-8 border-b border-black pb-8">
         <div className="flex items-center gap-3 mb-5">
           <span className="text-xs font-bold tracking-widest uppercase text-gray-400">
             {post.category}
