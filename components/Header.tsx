@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const navLinks = [
@@ -18,10 +19,18 @@ export default function Header() {
         {/* 로고 */}
         <Link
           href="/"
-          className="leading-tight text-sm font-black tracking-tight hover:opacity-70 transition-opacity shrink-0"
+          className="flex items-center gap-3 hover:opacity-70 transition-opacity shrink-0"
         >
-          <span className="block">산가리의</span>
-          <span className="block">테크블로그</span>
+          <Image
+            src="/profile.png"
+            alt="sanga-log logo"
+            width={36}
+            height={36}
+            className="rounded-full object-cover w-9 h-9"
+          />
+          <span className="leading-tight text-sm font-black tracking-tight">
+            <span className="block">sanga-log</span>
+          </span>
         </Link>
 
         {/* 네비게이션 - 모바일/데스크탑 공통 */}
@@ -32,9 +41,8 @@ export default function Header() {
               <Link
                 key={href}
                 href={href}
-                className={`text-xs md:text-sm font-bold tracking-widest transition-opacity ${
-                  isActive ? 'opacity-100' : 'opacity-40 hover:opacity-70'
-                }`}
+                className={`text-xs md:text-sm font-bold tracking-widest transition-opacity ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-70'
+                  }`}
               >
                 {label}
               </Link>
