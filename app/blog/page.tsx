@@ -6,8 +6,8 @@ interface PageProps {
 }
 
 export const metadata = {
-  title: 'Blog — 산가리의 테크블로그',
-  description: '프론트엔드 개발자 산가리의 기술 블로그',
+  title: 'Blogs — sanga-log',
+  description: 'sanga-log Blogs Page',
 };
 
 export default async function BlogPage({ searchParams }: PageProps) {
@@ -28,8 +28,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
         <h1 className="text-6xl font-black leading-none tracking-tighter">
           {currentCategory === '전체' ? (
             <>
-              <span className="block">카테고리</span>
-              <span className="block">네이밍</span>
+              <span className="block">Blogs</span>
             </>
           ) : (
             <span className="block">{currentCategory}</span>
@@ -43,9 +42,8 @@ export default async function BlogPage({ searchParams }: PageProps) {
           <Link
             key={cat}
             href={cat === '전체' ? '/blog' : `/blog?category=${encodeURIComponent(cat)}`}
-            className={`text-xs font-bold tracking-widest whitespace-nowrap transition-opacity ${
-              currentCategory === cat ? 'opacity-100' : 'opacity-30 hover:opacity-60'
-            }`}
+            className={`text-xs font-bold tracking-widest whitespace-nowrap transition-opacity ${currentCategory === cat ? 'opacity-100' : 'opacity-30 hover:opacity-60'
+              }`}
           >
             {cat.toUpperCase()}
           </Link>
