@@ -1,5 +1,14 @@
 import type { Metadata } from 'next';
 
+function renderBold(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) =>
+    part.startsWith('**') && part.endsWith('**')
+      ? <strong key={i} className="font-bold text-black">{part.slice(2, -2)}</strong>
+      : part
+  );
+}
+
 export const metadata: Metadata = {
   title: 'Resume — sanga-log',
   description: 'sanga-log Resume Page',
@@ -18,10 +27,10 @@ const experiences = [
     role: '프론트엔드 개발자',
     period: '2025.06 — 현재',
     description: [
-      'B2B 사장님 전용 솔루션(SaaS) 운영 및 고도화: Electron 기반 매장 관리 시스템의 유지보수와 신규 기능 개발, 안정적인 구독 서비스 제공으로 국내 890개 매장의 운영 디지털화 지원',
-      'B2C 하이브리드 웹앱 개발 및 최적화: 국내 유저가 사용하는 김캐디 메인 서비스의 웹뷰(WebView) 영역을 개발하여 모바일 환경에 최적화된 사용자 경험(UX) 제공',
-      '글로벌 플랫폼 "kaddie" 신규 런칭: 반응형 웹 기반 글로벌 서비스를 구축하여 창립 이래 최초의 해외 매출 발생 및 성공적인 글로벌 시장 진출 기여',
-      'AI 기술 내재화 및 전사 업무 자동화 주도: AI 코칭 프로젝트의 프론트엔드 개발을 전담하여 성공적으로 이끌었으며, GitHub Master 레포 요약 슬랙 봇 제작 등 AI 기술을 실무 프로세스에 도입하여 팀 생산성 향상 주도',
+      'B2B 사장님 솔루션(SaaS) 운영 및 고도화: **Electron** 기반 매장 관리 시스템의 유지보수와 신규 기능 개발, 안정적인 구독 서비스 제공으로 국내 890개 매장 운영 지원',
+      'B2C 하이브리드 웹앱 개발 및 최적화: 국내 유저가 사용하는 김캐디 메인 서비스의 **웹뷰(WebView)** 영역 개발',
+      '글로벌 플랫폼 **kaddie** 신규 런칭: 반응형 웹 기반 글로벌 서비스를 구축하여 창립 이래 최초의 해외 매출 발생 및 글로벌 시장 진출 기여',
+      'AI 기술 내재화 및 전사 업무 자동화 주도: AI 코칭 프로젝트의 프론트엔드 전담 개발, GitHub Master 레포 요약 슬랙 봇 제작 등 AI 기술을 실무 프로세스에 도입하여 팀 생산성 향상 주도',
     ],
   },
   {
@@ -151,7 +160,7 @@ export default function ResumePage() {
                 {exp.description.map((desc, i) => (
                   <li key={i} className="text-sm leading-relaxed text-gray-600 flex items-start gap-2">
                     <span className="mt-[0.65em] w-1 h-1 rounded-full bg-black shrink-0" />
-                    {desc}
+                    <span>{renderBold(desc)}</span>
                   </li>
                 ))}
               </ul>
@@ -183,7 +192,7 @@ export default function ResumePage() {
                 {project.items.map((item, i) => (
                   <li key={i} className="text-sm leading-relaxed text-gray-600 flex items-start gap-2">
                     <span className="mt-[0.65em] w-1 h-1 rounded-full bg-black shrink-0" />
-                    {item}
+                    <span>{renderBold(item)}</span>
                   </li>
                 ))}
               </ul>
