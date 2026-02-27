@@ -1,6 +1,6 @@
 ---
 title: "Intersection Observer로 차트 렌더링 최적화하기"
-excerpt: "차트 8개가 동시에 API를 쏘면서 초기 로딩이 30초까지 걸렸다. API 최적화만으로는 부족했고, 결국 렌더링 전략 자체를 바꿔야 했다."
+excerpt: "차트 8개가 동시에 API를 쏘면서 초기 로딩이 30초까지 걸렸습니다. API 최적화만으로는 부족했고, 결국 렌더링 전략 자체를 바꿔야 했던 과정에 대한 내용입니다."
 date: "2024-08-17"
 category: "JavaScript"
 tags: ["Intersection Observer", "성능 최적화", "Vue", "TBT", "Lazy Loading"]
@@ -34,7 +34,7 @@ tags: ["Intersection Observer", "성능 최적화", "Vue", "TBT", "Lazy Loading"
 
 처음에는 스크롤 이벤트를 떠올렸습니다. 스크롤할 때마다 각 차트의 위치를 계산해서 뷰포트 안에 있으면 API를 호출하는 방식이었습니다.
 
-그런데 이 방식의 문제가 보였습니다. 스크롤 이벤트는 스크롤하는 내내 계속 발생합니다. 이벤트가 발생할 때마다 8개 차트에 대해 `getBoundingClientRect()`를 호출하면 레이아웃 재계산이 반복됩니다. 성능을 개선하려고 도입하는데 오히려 또 다른 성능 문제를 만들 수 있는 상황이었습니다.
+그런데 이 방식의 문제가 보였습니다. 스크롤 이벤트는 스크롤하는 내내 계속 발생합니다. 이벤트가 발생할 때마다 8개 차트에 대해 **getBoundingClientRect()** 를 호출하면 레이아웃 재계산이 반복됩니다. 성능을 개선하려고 도입하는데 오히려 또 다른 성능 문제를 만들 수 있는 상황이었습니다.
 
 **Intersection Observer**는 이 문제를 다른 방식으로 접근합니다. 브라우저에게 "이 요소가 뷰포트와 교차하면 알려줘"라고 등록해두면, 브라우저가 내부적으로 감시하다가 교차 상태가 바뀔 때만 콜백을 실행해줍니다.
 
@@ -44,11 +44,11 @@ tags: ["Intersection Observer", "성능 최적화", "Vue", "TBT", "Lazy Loading"
 | 성능 비용   | 메인 스레드에서 직접 계산                | 브라우저 내부에서 비동기 처리 |
 | 구현 복잡도 | `getBoundingClientRect()` 직접 계산 필요 | API에 요소만 등록하면 됨      |
 
-Intersection Observer를 선택했습니다.
+결국 저는 Intersection Observer를 선택했습니다.
 
 ## 구현
 
-각 차트 DOM 요소를 `chartRefs` 배열에 모아두고, 페이지가 마운트될 때 Observer에 등록합니다.
+각 차트 DOM 요소를 **chartRefs** 배열에 모아두고, 페이지가 마운트될 때 Observer에 등록합니다.
 
 ```javascript
 const observer = new IntersectionObserver(handleIntersection);
@@ -97,11 +97,11 @@ const fetchData = async (chartNo, formData) => {
 
 중요한 부분이 두 곳입니다.
 
-**중복 요청 방지**: `chartDataList[index]`에 이미 데이터가 있으면 API를 다시 호출하지 않습니다. 사용자가 스크롤을 위아래로 반복해도 한 번 불러온 차트는 다시 요청하지 않습니다. 처음 구현할 때 이 부분을 빠뜨렸다가 스크롤할 때마다 API가 중복으로 날아가는 걸 발견했습니다. 중복 호출 방지는 꼭 넣어야 합니다.
+**중복 요청 방지** : `chartDataList[index]` 에 이미 데이터가 있으면 API를 다시 호출하지 않습니다. 사용자가 스크롤을 위아래로 반복해도 한 번 불러온 차트는 다시 요청하지 않습니다. 처음 구현할 때 이 부분을 빠뜨렸다가 스크롤할 때마다 API가 중복으로 날아가는 걸 발견했습니다. 중복 호출 방지는 꼭 넣어야 합니다.
 
-**인덱스 기반 매핑**: `chartRefs` 배열에서 DOM 요소의 인덱스를 찾아 그 인덱스에 해당하는 API만 호출합니다. 각 차트가 어떤 데이터를 불러와야 하는지가 인덱스로 매핑되어 있어서, Observer 콜백 안에서 복잡한 상태 관리 없이도 어떤 차트인지 특정할 수 있습니다.
+**인덱스 기반 매핑** : `chartRefs` 배열에서 DOM 요소의 인덱스를 찾아 그 인덱스에 해당하는 API만 호출합니다. 각 차트가 어떤 데이터를 불러와야 하는지가 인덱스로 매핑되어 있어서, Observer 콜백 안에서 복잡한 상태 관리 없이도 어떤 차트인지 특정할 수 있습니다.
 
-`onUnmounted`에서 `observer.disconnect()`를 호출해 정리하는 것도 중요합니다. 페이지를 떠났는데도 Observer가 살아있으면 메모리 누수로 이어질 수 있습니다.
+**onUnmounted** 에서 **observer.disconnect()** 를 호출해 정리하는 것도 중요합니다. 페이지를 떠났는데도 Observer가 살아있으면 메모리 누수로 이어질 수 있습니다.
 
 ## 결과
 
