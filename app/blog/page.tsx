@@ -2,6 +2,9 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getAllPosts, getAllCategories } from '@/lib/posts';
 import { SITE_URL } from '@/lib/constants';
+import { redis } from '@/lib/redis';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 interface PageProps {
   searchParams: Promise<{ category?: string }>;
@@ -30,6 +33,15 @@ export default async function BlogPage({ searchParams }: PageProps) {
     currentCategory === '전체'
       ? allPosts
       : allPosts.filter((p) => p.category === currentCategory);
+
+  const viewCounts: Record<string, number> = {};
+  if (filteredPosts.length > 0) {
+    const keys = filteredPosts.map((p) => `views:post:${p.slug}`);
+    const counts = await redis.mget<(number | null)[]>(...keys);
+    filteredPosts.forEach((p, i) => {
+      viewCounts[p.slug] = counts[i] ?? 0;
+    });
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-6">
@@ -71,9 +83,22 @@ export default async function BlogPage({ searchParams }: PageProps) {
               <h2 className="text-3xl font-black leading-tight tracking-tight mb-3 group-hover:opacity-50 transition-opacity">
                 {post.title}
               </h2>
-              <p className="text-sm leading-relaxed text-gray-700 max-w-3xl">
+              <p className="text-sm leading-relaxed text-gray-700 max-w-3xl mb-3">
                 {post.excerpt}
               </p>
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-bold tracking-widest uppercase text-gray-400">
+                  {post.category}
+                </span>
+                <span className="text-gray-300">·</span>
+                <span className="text-xs font-bold tracking-widest text-gray-400">
+                  {format(new Date(post.date), 'yyyy. MM. dd', { locale: ko })}
+                </span>
+                <span className="text-gray-300">·</span>
+                <span className="text-xs font-bold tracking-widest text-gray-400">
+                  {(viewCounts[post.slug] ?? 0).toLocaleString()} views
+                </span>
+              </div>
             </Link>
           </li>
         ))}
