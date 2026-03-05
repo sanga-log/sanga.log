@@ -9,6 +9,7 @@ import remarkGfm from 'remark-gfm';
 import MdxComponents from '@/components/MdxComponents';
 import TypewriterTitle from '@/components/TypewriterTitle';
 import JsonLd from '@/components/JsonLd';
+import ViewCounter from '@/components/ViewCounter';
 import type { Metadata } from 'next';
 
 interface PageProps {
@@ -88,6 +89,8 @@ export default async function PostPage({ params }: PageProps) {
           <span className="text-xs font-bold tracking-widest text-gray-400">
             {format(new Date(post.date), 'yyyy. MM. dd', { locale: ko })}
           </span>
+          <span className="text-gray-300">·</span>
+          <ViewCounter slug={slug} increment />
         </div>
         <TypewriterTitle
           text={post.title}
