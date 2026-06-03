@@ -6,8 +6,9 @@ import { usePathname } from 'next/navigation';
 const navLinks = [
   { href: '/', label: 'HOME' },
   { href: '/blog', label: 'BLOG' },
-  { href: '/resume', label: 'RESUME' },
-  { href: '/portfolio', label: 'PORTFOLIO' },
+  // 임시 비공개 — 작업 중이라 네비게이션에서 가림 (페이지·라우트는 유지)
+  // { href: '/resume', label: 'RESUME' },
+  // { href: '/portfolio', label: 'PORTFOLIO' },
 ];
 
 export default function Header() {
