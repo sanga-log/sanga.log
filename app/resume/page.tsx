@@ -194,6 +194,24 @@ function ProjectDivider({ accent }: { accent: Accent }) {
   );
 }
 
+const STRENGTHS = [
+  {
+    title: "고객 문제를 정책과 기능으로",
+    proof:
+      "선착순 쿠폰 조기 마감 문제를 영업과 함께 검토해 실사용 기준으로 전환",
+  },
+  {
+    title: "기획부터 출시 후 운영까지",
+    proof:
+      "광고 구독을 테이블 설계부터 결제·화면·운영까지 7개 레포에서 구현, 출시 후 유료 갱신 성공률 96.6%",
+  },
+  {
+    title: "데이터와 AI로 검증",
+    proof:
+      "SQL·로그로 원인을 좁히고, 에이전트 결론은 코드·데이터로 확인하는 규칙을 운영",
+  },
+];
+
 export default function ResumePage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
@@ -203,12 +221,11 @@ export default function ResumePage() {
           이상아
         </h1>
         <p className="mt-7 text-base leading-[1.7] text-[#6b7790] sm:text-lg">
-          무인 매장에서 실제로 돌아가는 소프트웨어를 만들어왔습니다. Electron
-          앱이 주변기기와 IPC로 통신하고, B2B SaaS가 900개 매장의 하루를
-          관리하는 환경에서 &ldquo;화면에서만 잘 되는 코드&rdquo;가 아니라
-          현장에서 터지지 않는 구조를 먼저 고민해왔습니다. 핫픽스로 막을수록
-          코드가 복잡해지는 걸 반복해서 경험한 뒤, 근본 원인을 바꾸는 쪽을
-          선택합니다.
+          기술영업 7년을 거쳐 개발자가 됐고, 고객의 요구를 제품으로 바꾸는 일을
+          합니다. 900개 매장이 쓰는 B2B SaaS와 무인 매장 Electron 앱에서 문제를
+          정의하고, 정책을 정하고, 화면부터 서버·결제까지 구현한 뒤, 출시 후
+          데이터로 결과를 확인합니다. AI 에이전트로 조사·구현·검증 흐름을
+          설계해 일하되, 결정과 최종 검증은 직접 합니다.
         </p>
         <div className="mt-8 flex items-center gap-4 text-base font-medium">
           <a
@@ -236,6 +253,14 @@ export default function ResumePage() {
             Github
           </a>
         </div>
+        <ul className="mt-10 flex flex-col gap-4 border-t border-[#d9dfe9] pt-8">
+          {STRENGTHS.map((s) => (
+            <li key={s.title} className="text-sm leading-[1.8]">
+              <span className="block font-bold text-[#1e1e1e]">{s.title}</span>
+              <span className="block text-[#45536d]">{s.proof}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* ── Work Experience ── */}
@@ -259,6 +284,74 @@ export default function ResumePage() {
 
             <Project
               first
+              accent="teal"
+              name="광고 구독 — 사장님 솔루션 광고 상품 풀스택 구축"
+              period="2026.06 — 현재"
+              description="매장 사장님이 마커 광고·리스팅 광고를 월 구독으로 직접 신청하고 쿠폰까지 운영하는 상품. 테이블 설계부터 화면·API·결제 워커·배치·어드민까지 7개 레포를 직접 구현하고, 출시 후 결제·쿠폰 데이터를 직접 확인하며 운영. 현재 유료 구독 90여 개 매장이 사용 중."
+              tags={[
+                "React",
+                "TypeScript",
+                "Kotlin",
+                "Spring",
+                "Django",
+                "MySQL",
+                "SQS",
+              ]}
+              items={[
+                <>
+                  백엔드 리뷰를 반영해 쿠폰·결제를 새로 만드는 대신{" "}
+                  <B>기존 테이블을 참조하고 회차 연결 테이블만 추가</B>, 신규
+                  테이블 6개로 구성. 결제일을 예정일·다음 시도일로 나눠 재시도
+                  상태 컬럼 없이 두 날짜 비교로 판별
+                </>,
+                <>
+                  결제 결과가 PG→SQS→워커로 늦게 오는 구조라{" "}
+                  <B>
+                    <code>PENDING → ACTIVE/FAILED</code> 상태 전이
+                  </B>
+                  로 설계하고, 화면은 신청 응답이 아닌 폴링 결과로만 확정 — 10초
+                  초과 시 안내 화면 전환, 재진입 시 폴링 재개,{" "}
+                  <code>ref</code>로 같은 틱 중복 클릭 차단. 실측 결과 중앙값
+                  2.8초, 30건 중 29건이 10초 안에 확정
+                </>,
+                <>
+                  받아만 두고 안 쓰는 쿠폰 때문에 선착순이 일찍 마감돼 매장 문의가
+                  반복되던 문제 — 두 기준의 장단점을 영업과 검토해{" "}
+                  <B>실사용 기준 전환과 받기 한도 4배</B>를 결정하고, 손님 앱 배포
+                  없이 서버에서 재해석해 사장님 화면엔 실사용 수량만 표기. 출시
+                  후 실측으로 받은 쿠폰 34,445장 중 사용은 11,281장(32.8%)
+                </>,
+                <>
+                  출시 후 3개월{" "}
+                  <B>유료 갱신 265건 중 256건 성공(96.6%)</B>, 1차 실패 15건 중
+                  6건은 재시도로 회복. 사장님이 직접 신청한 26곳 중 12곳은 이전
+                  광고 결제 이력이 없던 매장 (결제 이력 기준, 테스트 매장 제외)
+                </>,
+                <>
+                  &ldquo;두 달 무상&rdquo; 합의를 결제 중단 대신{" "}
+                  <B>결제 금액 0원</B>으로 처리 — 결제 경로를 추적해 PG 호출 없이
+                  성공 콜백이 돌아 갱신·쿠폰이 끊기지 않는 지점 선택
+                </>,
+                <>
+                  출시 후 결제·쿠폰 데이터를 매일 대조해{" "}
+                  <B>에러 없이 옛 시스템에서 돌던 매장을 발견</B> — 결제 재시도와
+                  이관 제외 조건이 겹친 원인을 찾고, 전수 조회로 후보 7곳을 추려
+                  매장별로 처리
+                </>,
+              ]}
+              links={[
+                {
+                  label: "프론트 개발자의 첫 백엔드 1편",
+                  href: "https://sangalog.com/blog/frontend-first-backend-1",
+                },
+                {
+                  label: "프론트 개발자의 첫 백엔드 2편",
+                  href: "https://sangalog.com/blog/frontend-first-backend-2",
+                },
+              ]}
+            />
+
+            <Project
               accent="teal"
               name="Kaddie Web — 글로벌 골프장 예약 B2C 웹 서비스"
               period="2025.09 — 현재"
@@ -304,7 +397,7 @@ export default function ResumePage() {
               accent="teal"
               name="AI Coach — AI 기반 골프 스윙 분석 데스크톱 앱"
               period="2025.07 — 현재"
-              description="무인 스크린골프 매장에서 고객이 직접 실시간 스윙을 분석·코칭받는 Electron 데스크톱 앱. 입사 직후 프로토타입을 이어받아 프론트엔드 1인으로 핵심 기능부터 운영까지 책임."
+              description="무인 스크린골프 매장에서 고객이 직접 실시간 스윙을 분석·코칭받는 Electron 데스크톱 앱. 입사 직후 프로토타입을 이어받아 프론트엔드 단독으로 핵심 기능부터 운영까지 책임."
               tags={[
                 "React",
                 "TypeScript",
@@ -367,6 +460,11 @@ export default function ResumePage() {
               ]}
               items={[
                 <>
+                  사장님 웹 nginx에 gzip과 정적 파일 장기 캐시를 적용해{" "}
+                  <B>ALB 일평균 전송량 91%↓, 요청 수 48%↓</B> (배포 전후
+                  CloudWatch 비교)
+                </>,
+                <>
                   <code>weekday</code> 필드 하나에 의미 없는 숫자
                   코드(&ldquo;1&rdquo;·&ldquo;2&rdquo;·&ldquo;4&rdquo;)가 뒤섞인
                   레거시 — 백엔드에 제안해 <code>price_category_cd</code> 배열
@@ -400,7 +498,7 @@ export default function ResumePage() {
 
             <Project
               accent="teal"
-              name="전사 업무 자동화"
+              name="전사 업무 자동화 · AI 워크플로우"
               description="현장에서 마주친 반복 작업을 자동화로 옮기고, 동료가 그대로 가져다 쓸 수 있게 사내 가이드·블로그로 공유."
               tags={[]}
               items={[
@@ -433,9 +531,36 @@ export default function ResumePage() {
                   </span>
                 </>,
                 <>
+                  주차장 사이트마다 로그인 화면이 달라 무인 매장 시공 때 자동
+                  로그인 스크립트를 개발자에게 요청하던 흐름을, 동료의 프롬프트를
+                  확장한 Claude 스킬로 전환 — 로그인 URL과 계정만 넣으면 페이지를
+                  분석해 생성하고, 폼을 미리 못 읽는 사이트는 실행 시점에 탐지.
+                  공유 후 3개월간{" "}
+                  <B>새로 세팅한 7개 매장을 영업팀이 개발자 없이 완료</B>, 주차
+                  매장 설정의 개발자 수정은 13건 → 0건 (직전 3개월 대비, 어드민
+                  수정 이력 기준)
+                </>,
+                <>
                   영업팀이 사이트 배너·입력폼 접수 알림을 슬랙에서만 받아
                   검색·관리가 어렵던 구조를, Apps Script로 Google Sheets에 자동
                   적재 — <B>리드를 날짜별 분류·필터링·담당자 지정으로 관리</B>
+                </>,
+                <>
+                  수기로 뽑던 광고 매출을 결제 로그 기준 집계로 표준화 — 광고월
+                  정의, 자동화 전후 비교, 이탈 매장까지{" "}
+                  <B>명령 하나로 재현</B>
+                </>,
+                <>
+                  원인 조사·티켓·구현·QA를 역할별 에이전트 세션으로 나눠 운영.
+                  구현하지 않은 에이전트가 깨는 시나리오를 실행해 재현 증거를
+                  넘기고, <B>판정과 배포 결정은 직접</B>
+                </>,
+                <>
+                  집계만 보고 틀린 판단을 전달 문장에 쓴 사고 뒤,{" "}
+                  <B>
+                    코드·조회 조건·실제 1건 추적·예외 분류를 거친 사실만 전달
+                  </B>
+                  하도록 에이전트 규칙으로 고정
                 </>,
               ]}
             />
