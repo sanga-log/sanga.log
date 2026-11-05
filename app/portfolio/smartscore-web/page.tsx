@@ -17,12 +17,12 @@ import {
 export const metadata: Metadata = {
   title: "국내 공식 웹사이트 개편 — Portfolio",
   description:
-    "스마트스코어 국내 공식 웹사이트 전면 개편. LCP 6.6s→0.9s 성능 최적화, 도메인 이전 SEO 전략, Zod 기반 폼 검증 설계 — 의사결정·트레이드오프·회고.",
+    "스마트스코어 국내 공식 웹사이트 전면 개편. LCP 6.6s→0.9s, 도메인 이전 SEO, Zod 폼 검증을 혼자 맡은 기록. 의사결정, 트레이드오프, 회고.",
   alternates: { canonical: `${SITE_URL}/portfolio/smartscore-web` },
   openGraph: {
     title: "국내 공식 웹사이트 개편 — Portfolio",
     description:
-      "스마트스코어 국내 공식 웹사이트 전면 개편. LCP 6.6s→0.9s 성능 최적화, 도메인 이전 SEO 전략, Zod 기반 폼 검증 설계 — 의사결정·트레이드오프·회고.",
+      "스마트스코어 국내 공식 웹사이트 전면 개편. LCP 6.6s→0.9s, 도메인 이전 SEO, Zod 폼 검증을 혼자 맡은 기록. 의사결정, 트레이드오프, 회고.",
     url: `${SITE_URL}/portfolio/smartscore-web`,
   },
 };
@@ -43,8 +43,8 @@ export default function SmartsocreWebPortfolioPage() {
           국내 공식 웹사이트 개편
         </h1>
         <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
-          국내 1위 골프 O2O 공식 웹의 프론트엔드를 단독으로 전면 개편하며
-          성능·SEO·폼 검증까지 전 영역을 담당했습니다.
+          골프 O2O 플랫폼 공식 웹사이트의 프론트엔드를 혼자 전면 개편했습니다.
+          도메인 이전, 성능, SEO, 폼 검증을 다시 설계했습니다.
         </p>
         <div className="flex flex-wrap gap-1.5">
           {["Vue3", "TypeScript", "Vite", "i18n", "Zod", "Unhead"].map((t) => (
@@ -54,18 +54,39 @@ export default function SmartsocreWebPortfolioPage() {
       </section>
 
       <section className="mb-12">
+        <SectionLabel>풀어야 했던 문제</SectionLabel>
+        <BulletList
+          items={[
+            "배포 직후 측정한 첫 화면 로딩(LCP)이 6.6초, 레이아웃 밀림(CLS)이 0.737이었습니다.",
+            "도메인을 옮기면 기존 검색 색인이 새 도메인으로 바로 이어지지 않아 노출이 떨어질 수 있었습니다.",
+            "글로벌 사이트에서는 폼 검증이 필드마다 흩어져 있어 기획이 바뀔 때마다 고치기 어려웠습니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>내 역할과 협업</SectionLabel>
+        <BulletList
+          items={[
+            "직접 한 일: 프론트엔드 전체(화면, 다국어, 성능, SEO, 폼 검증, 도메인 이전 세팅)",
+            "직접 하지 않은 일: 디자인, 문안, 번역 텍스트",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
         <SectionLabel>핵심 성과</SectionLabel>
         <BulletList
           items={[
             <>
-              LCP <B>6.6s → 0.9s (86%↓)</B>, CLS 0.737 → 0 — 코드 변경만으로
-              달성
+              LCP <B>6.6s → 0.9s (86%↓)</B>, CLS 0.737 → 0. 이미지 CDN 없이
+              코드 변경만으로 얻은 수치입니다
             </>,
             <>
-              Lighthouse SEO <B>83 → 92점</B> — 도메인 이전과 동시 설계로 색인
-              공백 최소화
+              Lighthouse SEO <B>83 → 92점</B>. 도메인 이전과 동시에 SEO 세팅을
+              끝내 색인 공백을 줄였습니다
             </>,
-            "프론트엔드 단독으로 전면 개편 — 도메인 이전·다국어·성능·SEO·폼 검증 전 영역",
+            "프론트엔드를 혼자 맡아 도메인 이전, 다국어, 성능, SEO, 폼 검증을 전면 개편",
           ]}
         />
       </section>
@@ -84,7 +105,7 @@ export default function SmartsocreWebPortfolioPage() {
               로딩 순서를 그대로 따르고 있었습니다. 이미지 CDN은 비용·운영 부담이
               있고 lazy loading만으로는 LCP가 나아지지 않아, <B>WebP 전환 +
               preload + fetchpriority=&quot;high&quot; 조합</B>을 골랐습니다.
-              코드만 바꿔서 가장 큰 임팩트를 낼 수 있는 방향이었습니다. CLS는
+              코드만 바꿔서 가장 크게 줄일 수 있는 방향이었습니다. CLS는
               이미지에 width/height를 명시해 레이아웃이 밀리지 않게 잡았습니다.
             </>
           }
@@ -133,7 +154,7 @@ export default function SmartsocreWebPortfolioPage() {
           retrospective={
             <>
               LCP는 이미지 크기보다 로딩 순서가 먼저였습니다. fetchpriority 한
-              줄이 CDN 도입보다 더 큰 임팩트를 냈습니다. 처음엔 원인 분석 없이
+              줄이 CDN 도입보다 더 크게 줄였습니다. 처음엔 원인 분석 없이
               CDN부터 떠올렸는데, 병목을 먼저 측정하고 접근했다면 더 빨리 풀 수
               있었을 것 같습니다.
             </>
@@ -142,7 +163,7 @@ export default function SmartsocreWebPortfolioPage() {
 
         <Decision
           number={2}
-          title="도메인 이전 — 검색 색인 리셋 위험을 인지하고 SEO 전략 선제 설계"
+          title="도메인 이전 — 검색 색인 리셋에 대비해 SEO를 이전과 동시에 세팅"
           body={
             <>
               도메인을 옮기면 기존 색인이 새 도메인으로 곧장 이어지지 않아 검색
@@ -202,7 +223,7 @@ export default function SmartsocreWebPortfolioPage() {
             </>
           }
           result={[
-            "필드별 정규표현식을 단일 Zod 스키마로 응집",
+            "필드별 정규표현식을 단일 Zod 스키마로 모음",
             "첫 진입 에러 숨김 + 제출 후 실시간 검증 UX 직접 구현",
             <>
               블로그 글로 정리:{" "}

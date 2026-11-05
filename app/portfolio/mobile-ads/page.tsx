@@ -18,12 +18,12 @@ import { C5A_CODE, C5B_CODE } from "./_snippets";
 export const metadata: Metadata = {
   title: "모바일 네트워크 광고 시스템 — Portfolio",
   description:
-    "사내 최초로 모바일 네트워크 광고를 도입한 프로젝트. 4가지 광고 타입 통합 처리 공통 모듈 설계 — 의사결정·트레이드오프·회고.",
+    "사내 처음으로 모바일 네트워크 광고를 도입한 프로젝트. 4가지 광고 타입을 한 번에 처리하는 공통 모듈을 설계한 기록. 의사결정, 트레이드오프, 회고.",
   alternates: { canonical: `${SITE_URL}/portfolio/mobile-ads` },
   openGraph: {
     title: "모바일 네트워크 광고 시스템 — Portfolio",
     description:
-      "사내 최초로 모바일 네트워크 광고를 도입한 프로젝트. 4가지 광고 타입 통합 처리 공통 모듈 설계 — 의사결정·트레이드오프·회고.",
+      "사내 처음으로 모바일 네트워크 광고를 도입한 프로젝트. 4가지 광고 타입을 한 번에 처리하는 공통 모듈을 설계한 기록. 의사결정, 트레이드오프, 회고.",
     url: `${SITE_URL}/portfolio/mobile-ads`,
   },
 };
@@ -44,26 +44,47 @@ export default function MobileAdsPortfolioPage() {
           모바일 네트워크 광고 시스템
         </h1>
         <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
-          사내 최초로 모바일 네트워크 광고를 도입하고, 4가지 타입을 통합한 공통
-          Mixin을 설계했습니다.
+          사내 처음으로 앱에 모바일 네트워크 광고를 도입했습니다. 4가지 광고
+          타입을 한 번에 처리하는 공통 Mixin을 설계해 다른 앱에서도 쓸 수 있게
+          했습니다.
         </p>
         <div className="flex flex-wrap gap-1.5">
-          {["Vue2", "Pinia", "Webpack"].map((t) => (
+          {["Vue2", "Webpack"].map((t) => (
             <Tag key={t}>{t}</Tag>
           ))}
         </div>
       </section>
 
       <section className="mb-12">
+        <SectionLabel>풀어야 했던 문제</SectionLabel>
+        <BulletList
+          items={[
+            "광고 SDK를 처음 붙이는 거라 4가지 광고 타입을 어느 화면에서든 부를 수 있어야 했고, 다른 팀도 같은 코드를 반복하지 않고 쓸 수 있어야 했습니다.",
+            "광고 로딩이 느려 노출이 늦거나 다른 화면에서 떠올랐고, 광고가 도는 동안 포인트가 추가로 빠져나가는 사용자 손해가 있었습니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>내 역할과 협업</SectionLabel>
+        <BulletList
+          items={[
+            "직접 한 일: 광고 호출 구조 설계, 공통 Mixin 모듈, 포인트 전환 화면과 차감 가드",
+            "함께한 일: 광고 SDK 호출과 close 콜백은 네이티브 앱(AOS/iOS) 쪽과 인터페이스를 맞췄습니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
         <SectionLabel>핵심 성과</SectionLabel>
         <BulletList
           items={[
-            "사내 최초로 모바일 네트워크 광고 도입",
+            "사내 처음으로 모바일 네트워크 광고 도입",
             <>
-              4가지 광고 타입 통합 공통 Mixin — 다른 팀은 <code>idx</code> 한
-              줄로 도입
+              4가지 광고 타입을 한 번에 처리하는 공통 Mixin. 다른 팀은{" "}
+              <code>idx</code> 한 줄로 도입
             </>,
-            "광고 로딩 중 포인트 이중 차감 가드 — 사용자 손해 차단",
+            "광고 로딩 중 포인트 이중 차감 가드로 사용자 손해 차단",
           ]}
         />
       </section>
@@ -124,7 +145,7 @@ export default function MobileAdsPortfolioPage() {
               때문입니다. 타입마다 컴포넌트를 따로 만드는 대신 콜백 액션을
               매핑하고(<code>RewardVideo</code>는 영상 시청 완료 여부를{" "}
               <code>status: completed/skipped</code>로 분기), <code>idx</code>{" "}
-              하나만으로 광고를 호출할 수 있게 일원화했습니다. 네이버 광고(NAM)와
+              하나만으로 광고를 호출할 수 있게 했습니다. 네이버 광고(NAM)와
               제3자 비디오 광고 SDK 두 종을 같은 인터페이스로 통합한 것도 같은
               생각이었습니다. 다른 팀은 <code>idx</code>만 추가하면 광고 호출 코드
               없이 그대로 가져다 쓸 수 있습니다.
@@ -191,7 +212,7 @@ export default function MobileAdsPortfolioPage() {
             "4가지 광고 타입 통합 처리 Mixin 모듈",
             "OS·Placement ID 상수화 + 콜백 액션 매핑",
             <>
-              <code>idx</code>만으로 광고 호출 가능 — 다른 프로젝트 재사용 가능
+              <code>idx</code>만으로 광고 호출 가능. 다른 프로젝트에서 재사용
             </>,
           ]}
           retrospective={

@@ -19,12 +19,12 @@ import { PHASE_CODE, POLL_CODE } from "./_snippets";
 export const metadata: Metadata = {
   title: "광고 구독 풀스택 구축 — Portfolio",
   description:
-    "광고 구독 상품을 테이블 설계부터 결제·배치·운영까지 직접 만든 기록 — 의사결정·트레이드오프·회고.",
+    "광고 구독 상품을 테이블 설계부터 배치·어드민·운영까지 직접 만든 기록. 의사결정, 트레이드오프, 회고.",
   alternates: { canonical: `${SITE_URL}/portfolio/ad-subscribe` },
   openGraph: {
     title: "광고 구독 풀스택 구축 — Portfolio",
     description:
-      "광고 구독 상품을 테이블 설계부터 결제·배치·운영까지 직접 만든 기록 — 의사결정·트레이드오프·회고.",
+      "광고 구독 상품을 테이블 설계부터 배치·어드민·운영까지 직접 만든 기록. 의사결정, 트레이드오프, 회고.",
     url: `${SITE_URL}/portfolio/ad-subscribe`,
   },
 };
@@ -50,10 +50,10 @@ export default function AdSubscribePortfolioPage() {
         <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
           매장 사장님이 마커 광고·리스팅 광고를 월 구독으로 신청하고 쿠폰까지
           운영하는 상품입니다. 프론트엔드 개발자로서 처음 백엔드까지 맡아, 테이블
-          설계부터 화면, API, 결제 워커, 배치, 어드민까지 직접 구현했습니다.
+          설계부터 화면, API, 결제 결과 처리, 배치, 어드민까지 직접 구현했습니다.
         </p>
         <div className="flex flex-wrap gap-1.5">
-          {["React", "TypeScript", "Kotlin", "Spring", "Django", "MySQL", "SQS"].map(
+          {["React", "TypeScript", "Kotlin", "Spring", "Django", "MySQL"].map(
             (t) => (
               <Tag key={t}>{t}</Tag>
             ),
@@ -95,8 +95,9 @@ export default function AdSubscribePortfolioPage() {
         <SectionLabel>내 역할과 협업</SectionLabel>
         <BulletList
           items={[
-            "직접 한 일: 테이블·API 설계, 구독·결제·쿠폰 서버, 결제 결과 워커, 배치, 어드민, 광고센터 화면, 정책 정리, 출시 후 데이터 확인과 보정",
-            "함께한 일: 설계는 백엔드 개발자분의 리뷰를 반영했고, 기존 매장 이관 기능은 다른 개발자분이 구현했으며, 쿠폰 기준과 무상 조건은 영업과 협의했습니다.",
+            "직접 한 일: 테이블·API 설계, 구독·쿠폰 서버, 결제 결과를 받아 구독 상태를 확정하는 워커 처리, 배치, 어드민, 광고센터 화면, 정책 정리, 출시 후 데이터 확인과 보정",
+            "함께한 일: 설계는 백엔드 개발자분의 리뷰를 반영했고, PG 결제와 SQS 연동은 기존 결제 코드를 그대로 썼습니다. 기존 매장 이관 기능은 다른 개발자분이 구현했고, 쿠폰 기준과 무상 조건은 영업과 협의했습니다.",
+            "범위 조정: 카카오 광고 자동 발송은 기간 안에 준비가 어려워, 신청만 자동으로 받고 발송은 영업 담당자가 맡는 방식으로 바꿔 출시했습니다.",
           ]}
         />
       </section>
@@ -114,7 +115,7 @@ export default function AdSubscribePortfolioPage() {
             "손님 앱 배포 없이 선착순 쿠폰 기준을 다운로드에서 실사용으로 전환",
             "무상 합의를 0원 결제로 처리해 갱신·쿠폰 유지",
             "출시 후 데이터 대조로 에러 없이 옛 시스템에서 돌던 매장을 찾아 매장별로 처리",
-            "구독 취소는 환불(외부 호출)을 먼저 실행 — 환불이 실패하면 만료·노출 변경이 돌지 않아 반쯤 취소된 상태 차단",
+            "구독 취소는 환불(외부 호출)을 먼저 실행합니다. 환불이 실패하면 만료·노출 변경이 돌지 않아, 반쯤 취소된 상태가 생기지 않습니다.",
           ]}
         />
       </section>
@@ -436,7 +437,7 @@ export default function AdSubscribePortfolioPage() {
           }
           result={[
             "옛 시스템에서 결제가 도는데 새 구독이 없는 곳을 전수 조회해 48건에서 후보 7곳 확정",
-            "이관 기능의 미리 보기로 판정을 먼저 확인 — 2곳 이전, 3곳 말일 결제 뒤 이전 결정, 2곳은 이용권 결제라 제외",
+            "이관 기능의 미리 보기로 판정을 먼저 확인했습니다. 2곳 이전, 3곳은 말일 결제 뒤 이전, 2곳은 이용권 결제라 제외",
           ]}
           retrospective={
             <>
@@ -454,7 +455,7 @@ export default function AdSubscribePortfolioPage() {
           items={[
             "갱신 결제는 3번까지 재시도하고, 그래도 실패하면 구독 해지",
             "결제와 동시에 광고가 노출되므로, 당일 환불도 하루치 차감",
-            "못 쓴 쿠폰은 다음 달로 이관 — 예산은 이전 회차에서 채웠으므로 수량에만 포함",
+            "못 쓴 쿠폰은 다음 달로 이관합니다. 예산은 이전 회차에서 채웠으므로 수량에만 포함",
             "쿠폰을 기간 안에 다 못 쓰는 매장이 계속 나와, 영업 담당자가 어드민에서 구독 기간을 늘리도록 구현 (기간마다 1번, 최대 한 달)",
             "카카오 광고는 새로 준비할 게 많아 기간 안에 어려워, 신청은 자동으로 받고 최종 발송은 영업 담당자가 맡는 방식으로 변경",
           ]}
@@ -481,21 +482,21 @@ export default function AdSubscribePortfolioPage() {
         <SectionLabel>더 읽어보기</SectionLabel>
         <BulletList
           items={[
-            <a
+            <Link
               key="part-1"
               href="/blog/frontend-first-backend-1"
               className={BLOG_LINK_CLASS}
             >
-              프론트 개발자의 첫 백엔드 1편 — 처음 짜 본 API에서 만난 에러들
-            </a>,
-            <a
+              프론트 개발자의 첫 백엔드 1편: 처음 짜 본 API에서 만난 에러들
+            </Link>,
+            <Link
               key="part-2"
               href="/blog/frontend-first-backend-2"
               className={BLOG_LINK_CLASS}
             >
-              프론트 개발자의 첫 백엔드 2편 — 출시하고 나서, 코드로는 못 고치는
+              프론트 개발자의 첫 백엔드 2편: 출시하고 나서, 코드로는 못 고치는
               것들
-            </a>,
+            </Link>,
           ]}
         />
       </section>

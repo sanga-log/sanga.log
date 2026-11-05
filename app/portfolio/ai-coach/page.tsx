@@ -17,12 +17,12 @@ import {
 export const metadata: Metadata = {
   title: "AI Coach — Portfolio",
   description:
-    "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드 단독으로 개발·운영 — 의사결정·트레이드오프·회고.",
+    "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 개발·운영한 기록. 의사결정, 트레이드오프, 회고.",
   alternates: { canonical: `${SITE_URL}/portfolio/ai-coach` },
   openGraph: {
     title: "AI Coach — Portfolio",
     description:
-      "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드 단독으로 개발·운영 — 의사결정·트레이드오프·회고.",
+      "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 개발·운영한 기록. 의사결정, 트레이드오프, 회고.",
     url: `${SITE_URL}/portfolio/ai-coach`,
   },
 };
@@ -43,8 +43,9 @@ export default function AICoachPortfolioPage() {
           AI Coach
         </h1>
         <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
-          무인 매장의 실시간 스윙 분석·코칭 Electron 앱을 프론트엔드 1인으로
-          전담했습니다.
+          무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는
+          Electron 앱입니다. 입사 직후 프로토타입을 이어받아 프론트엔드를 혼자
+          맡았습니다.
         </p>
         <div className="flex flex-wrap gap-1.5">
           {[
@@ -62,19 +63,42 @@ export default function AICoachPortfolioPage() {
       </section>
 
       <section className="mb-12">
+        <SectionLabel>풀어야 했던 문제</SectionLabel>
+        <BulletList
+          items={[
+            "무인 매장 PC에서 도는 앱인데, 매장을 추가하거나 업데이트할 때마다 개발자가 빌드하고 현장을 방문해야 했습니다.",
+            "시뮬레이터 주변기기와 IPC로 통신하는 구조에서 렌더러가 Node 권한을 그대로 가지고 있어, SPA가 침해되면 매장 PC를 원격으로 제어할 수 있었습니다.",
+            "일본 1호점 준비로 다국어가 필요했고, UI만 번역하면 AI 답변과 음성은 한국어로 나왔습니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>내 역할과 협업</SectionLabel>
+        <BulletList
+          items={[
+            "직접 한 일: Electron 앱 프론트엔드 전체(화면, IPC 구조, 빌드·배포 파이프라인, 다국어, 로그), 매장 현장 테스트",
+            "함께한 일: MAC Address로 매장 정보를 내려주는 API와 언어별 AI 응답·TTS는 백엔드와 협의해 받았습니다. 스윙 분석 AI와 서버는 백엔드·AI 담당자가 맡았습니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
         <SectionLabel>핵심 성과</SectionLabel>
         <BulletList
           items={[
-            "빌드 → 배포 → 설치를 무인 자동화 — 업데이트 매장 방문 제거, 5개 테스트 매장 운영",
+            "빌드, 배포, 설치를 자동화해 업데이트 때 매장 방문이 없어졌습니다. 5개 테스트 매장에서 운영 중입니다.",
             <>
-              main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓)</B> — 차트
-              의존성 진입점 통제로 전 페이지 비용 사전 차단
+              main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓)</B>. 차트
+              라이브러리 진입점을 한 파일로 모아 한 화면의 차트가 전 페이지
+              번들에 묶이지 않게 했습니다.
             </>,
             <>
-              <code>contextBridge</code> 보안 모델 재설계 — 원격 임의 제어 권한
-              제거, 신규 IPC 등록 절차 <B>6곳 → 1곳</B>
+              <code>contextBridge</code>로 권한을 분리해 원격 임의 실행
+              가능성을 없애고, 신규 IPC 등록 위치를 <B>6곳에서 1곳으로</B>{" "}
+              줄였습니다.
             </>,
-            "특허 공동 발명자 등재 — AI 골프 레슨 방법 및 컴퓨팅 장치 (등록번호 10-2952712, 2026.04.10 등록)",
+            "특허 공동 발명자 등재: AI 골프 레슨 방법 및 컴퓨팅 장치 (등록번호 10-2952712, 2026.04.17 등록)",
           ]}
         />
       </section>
@@ -205,10 +229,10 @@ export default function AICoachPortfolioPage() {
           }
           result={[
             <>
-              main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓, 168 KB 감소)</B>{" "}
-              — raw 기준 2.49 MB → 1.96 MB (-530 KB)
+              main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓, 168 KB 감소)</B>,
+              raw 기준 2.49 MB → 1.96 MB (-530 KB)
             </>,
-            "lesson note 1곳 차트가 모든 페이지 main bundle 비용에 전파되던 걸 사전 차단",
+            "lesson note 한 화면의 차트가 모든 페이지 main bundle 비용에 더해지던 것을 막았습니다",
             "신규 차트 추가 시 chartCore.ts 한 파일 등록만으로 모든 사용처 자동 적용",
           ]}
           retrospective={
@@ -310,7 +334,7 @@ export default function AICoachPortfolioPage() {
             </>
           }
           result={[
-            "STOMP 재연결 후 메시지 무응답 장애 원인 식별 — sessionStorage 캐싱 분기 제거",
+            "STOMP 재연결 후 메시지 무응답 장애의 원인을 찾고 sessionStorage 캐싱 분기 제거",
             "서버 발급 세션 ID만 사용하는 구조로 전환해 재발 차단",
             "재연결 성공 / 메시지 무응답 분리 진단으로 원인 범위 좁혀 해결",
           ]}

@@ -18,12 +18,12 @@ import { C3_CODE, C4A_CODE, C4B_CODE } from "./_snippets";
 export const metadata: Metadata = {
   title: "Kaddie Web — Portfolio",
   description:
-    "김캐디의 해외 스크린 골프 및 연습장 예약 B2C 웹. 초기 아키텍처 설계부터 핵심 기능 개발·런칭 주도 — 의사결정·트레이드오프·회고.",
+    "김캐디의 해외 스크린골프·연습장 예약 B2C 웹. 예약 슬롯 검증, 결제 결과 폴링, 다국어 빌드 파이프라인을 맡은 기록. 의사결정, 트레이드오프, 회고.",
   alternates: { canonical: `${SITE_URL}/portfolio/kaddie-web` },
   openGraph: {
     title: "Kaddie Web — Portfolio",
     description:
-      "김캐디의 해외 스크린 골프 및 연습장 예약 B2C 웹. 초기 아키텍처 설계부터 핵심 기능 개발·런칭 주도 — 의사결정·트레이드오프·회고.",
+      "김캐디의 해외 스크린골프·연습장 예약 B2C 웹. 예약 슬롯 검증, 결제 결과 폴링, 다국어 빌드 파이프라인을 맡은 기록. 의사결정, 트레이드오프, 회고.",
     url: `${SITE_URL}/portfolio/kaddie-web`,
   },
 };
@@ -44,15 +44,16 @@ export default function KaddieWebPortfolioPage() {
           Kaddie Web
         </h1>
         <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
-          해외 스크린골프·연습장 예약 B2C 웹에서 부킹·결제 폴링·다국어 prebuild
-          파이프라인을 직접 담당했습니다.
+          해외 스크린골프·연습장 예약 B2C 웹입니다. 회사의 첫 해외 매출을 만든
+          서비스로, 태국·필리핀·미국 매장에서 운영 중입니다. 예약 슬롯 검증, 결제
+          결과 폴링, 다국어 빌드 파이프라인을 맡았습니다.
         </p>
         <div className="flex flex-wrap gap-1.5">
           {[
             "React",
             "TypeScript",
             "Recoil",
-            "Stripe",
+            "react-query",
             "i18next",
           ].map((t) => (
             <Tag key={t}>{t}</Tag>
@@ -61,16 +62,37 @@ export default function KaddieWebPortfolioPage() {
       </section>
 
       <section className="mb-12">
+        <SectionLabel>풀어야 했던 문제</SectionLabel>
+        <BulletList
+          items={[
+            "매장마다 운영시간, 게임 소요시간, 룸 수가 달라서, 손님이 고른 시간이 매장 규칙과 맞는지 폼을 다 채운 뒤에야 알 수 있었습니다.",
+            "결제 직후에는 서버도 결제 결과를 바로 모르는 구조라, 화면이 결과를 기다리는 동안 중복 청구가 생길 수 있었습니다.",
+            "6개 언어 번역이 자주 바뀌는데, 번역을 고칠 때마다 개발자가 코드를 손대야 했습니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>내 역할과 협업</SectionLabel>
+        <BulletList
+          items={[
+            "직접 한 일: 예약 슬롯 검증 로직, 결제 결과 폴링 화면, 다국어 prebuild 파이프라인과 시크릿 주입 구성",
+            "함께한 일: 결제 결과 도착 시간(최대 5초)과 실패 판정 기준은 백엔드와 맞췄고, 동시성 충돌은 백엔드가 최종 검증합니다. 번역 내용은 운영 담당자가 Google Sheets에서 관리합니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
         <SectionLabel>핵심 성과</SectionLabel>
         <BulletList
           items={[
-            "회사 최초 해외 매출 달성 — 태국·필리핀·미국 3개국 운영",
-            "4중 조건 예약 충돌을 슬롯 선택 시점에서 원천 차단 — 폼 제출 전에 무효 슬롯 비활성화",
+            "회사 최초 해외 매출을 만든 서비스. 태국·필리핀·미국 3개국에서 운영 중",
+            "네 가지 조건을 모두 통과한 슬롯만 활성화해, 매장 규칙과 어긋난 예약을 폼 제출 전에 막았습니다",
             <>
-              <code>react-query</code> 폴링 설계로 결제 결과 확정 + 이중 청구
-              차단
+              <code>react-query</code> 폴링으로 결제 결과를 확정하고, 대기 중 결제
+              버튼을 잠가 이중 청구를 막았습니다
             </>,
-            "Google Sheets 기반 6개 언어 자동 번역 파이프라인 구축 — 변경분만 빌드",
+            "Google Sheets 기반 6개 언어 번역 파이프라인. 변경된 부분만 빌드에 반영",
           ]}
         />
       </section>
@@ -80,12 +102,12 @@ export default function KaddieWebPortfolioPage() {
 
         <Decision
           number={1}
-          title="복합 조건 예약 충돌 검증 — 시스템 레벨 원천 차단"
+          title="복합 조건 예약 충돌 검증 — 슬롯 선택 시점에서 막기"
           body={
             <>
               <p>
                 매장마다 다른 요일별(평일/토/일) 운영시간, 매장별 게임
-                소요시간(60·90분 등), 룸별 기예약, 현재 이전 시간 차단 —{" "}
+                소요시간(60·90분 등), 룸별 기예약, 현재 이전 시간 차단.{" "}
                 <B>이 네 가지 조건을 한꺼번에 통과한 슬롯만 활성화</B>해, 매장
                 운영 룰과 어긋난 예약을 입력 단계에서 걸러내는 부킹
                 시스템입니다.{" "}
@@ -106,10 +128,10 @@ export default function KaddieWebPortfolioPage() {
                 자동으로 비활성화해, 무효 슬롯은 클릭조차 못 하게 했습니다.
               </p>
               <p>
-                <B>고려한 옵션</B>은 이렇습니다. (a) <B>백엔드만 검증</B> —
+                <B>고려한 옵션</B>은 이렇습니다. (a) <B>백엔드만 검증</B>.
                 사용자가 시간 선택을 다 끝낸 뒤에야 충돌이 드러나고, 백엔드는
                 사용자가 무엇을 누를지 미리 알 수 없습니다. (b){" "}
-                <B>클라만 검증</B> — 같은 시간대에 다른 사용자가 몇 분 차이로
+                <B>클라만 검증</B>. 같은 시간대에 다른 사용자가 몇 분 차이로
                 예약하는 동시성 충돌은 클라이언트가 알 수 없어 정합성이 깨집니다.
                 그래서 결국 (c) <B>양쪽 검증</B>을 택했습니다. 프론트는 “선택
                 가능한 슬롯만 노출”로 UX를, 백엔드는 “최종 정합성”으로 동시성
@@ -181,7 +203,7 @@ export default function KaddieWebPortfolioPage() {
 
         <Decision
           number={2}
-          title="Stripe 결제 직후 서버 응답 지연 — react-query 폴링으로 응집"
+          title="결제 직후 서버 응답 지연 — react-query 폴링으로 정리"
           body={
             <>
               <p>
@@ -376,7 +398,7 @@ export default function KaddieWebPortfolioPage() {
           result={[
             "Google Sheets에서 번역 추가·수정 시 다음 빌드에서 변경된 부분만 6개 언어 번역 파일에 자동 반영",
             "MD5 해시 캐싱으로 변경 키만 부분 갱신",
-            "AWS Secrets Manager로 credentials 일원화 (빌드 단계 주입·종료 시 삭제)",
+            "credentials는 AWS Secrets Manager에서만 관리 (빌드 단계 주입, 종료 시 삭제)",
           ]}
           retrospective={
             <>
