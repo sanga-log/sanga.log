@@ -3,9 +3,10 @@ const MdxComponents = {
     <div
       className="slack-block"
       style={{
-        background: '#161b22',
-        border: '1px solid #30363d',
+        background: '#ffffff',
+        border: '1px solid #e2e2e2',
         borderRadius: '8px',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
         padding: '1.25rem 1.5rem',
         overflowX: 'auto',
         marginBottom: '1.5rem',

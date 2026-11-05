@@ -17,12 +17,12 @@ import {
 export const metadata: Metadata = {
   title: "AI Coach — Portfolio",
   description:
-    "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드 1인으로 개발·운영 — 의사결정·트레이드오프·회고.",
+    "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 개발·운영한 기록. 의사결정, 트레이드오프, 회고.",
   alternates: { canonical: `${SITE_URL}/portfolio/ai-coach` },
   openGraph: {
     title: "AI Coach — Portfolio",
     description:
-      "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드 1인으로 개발·운영 — 의사결정·트레이드오프·회고.",
+      "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 개발·운영한 기록. 의사결정, 트레이드오프, 회고.",
     url: `${SITE_URL}/portfolio/ai-coach`,
   },
 };
@@ -39,32 +39,15 @@ export default function AICoachPortfolioPage() {
       </Link>
 
       <section className="border-b border-black pb-12 mb-12">
-        <p className="text-sm font-bold text-gray-700 mb-3">
-          김캐디 · 2025.07 — 현재 · 프론트엔드 1인 개발·운영
-        </p>
-        <h1 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight mb-5">
+        <h1 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight">
           AI Coach
         </h1>
-        <p className="text-base leading-relaxed text-gray-700">
-          무인 스크린골프 매장에서 고객이 직접 실시간으로 스윙을 분석·코칭받는
-          Electron 데스크톱 앱. 프로토타입을 이어받아 핵심 기능부터 운영까지
-          책임.
+        <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
+          무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는
+          Electron 앱입니다. 입사 직후 프로토타입을 이어받아 프론트엔드를 혼자
+          맡았습니다.
         </p>
-      </section>
-
-      <section className="mb-12">
-        <SectionLabel>Context</SectionLabel>
-        <BulletList
-          items={[
-            "김캐디(무인 매장 170개+ / 누적 200만+ 다운로드)의 AI 코칭 솔루션",
-            "시뮬레이터 3사(GTS · Nvisage · K-Golf) 본사 + 회사 직영 0753Golf + GTS 일본 수출 = 5개 테스트 매장 전체 가동 중",
-          ]}
-        />
-      </section>
-
-      <section className="mb-12">
-        <SectionLabel>Stack & Role</SectionLabel>
-        <div className="flex flex-wrap gap-1.5 mb-4">
+        <div className="flex flex-wrap gap-1.5">
           {[
             "React",
             "TypeScript",
@@ -72,39 +55,73 @@ export default function AICoachPortfolioPage() {
             "Recoil",
             "WebSocket",
             "ECharts",
-            "AWS",
             "i18next",
           ].map((t) => (
             <Tag key={t}>{t}</Tag>
           ))}
         </div>
-        <p className="text-sm leading-[1.75] text-gray-700">
-          프로토타입을 입사 직후 이어받아 프론트엔드 1인으로 개발·운영.
-          electron-updater publish 자동 배포와 S3 버킷·자산 업로드까지 직접
-          구축.
-        </p>
       </section>
 
       <section className="mb-12">
-        <SectionLabel>Decisions</SectionLabel>
+        <SectionLabel>풀어야 했던 문제</SectionLabel>
+        <BulletList
+          items={[
+            "무인 매장 PC에서 도는 앱인데, 매장을 추가하거나 업데이트할 때마다 개발자가 빌드하고 현장을 방문해야 했습니다.",
+            "시뮬레이터 주변기기와 IPC로 통신하는 구조에서 렌더러가 Node 권한을 그대로 가지고 있어, SPA가 침해되면 매장 PC를 원격으로 제어할 수 있었습니다.",
+            "일본 1호점 준비로 다국어가 필요했고, UI만 번역하면 AI 답변과 음성은 한국어로 나왔습니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>내 역할과 협업</SectionLabel>
+        <BulletList
+          items={[
+            "직접 한 일: Electron 앱 프론트엔드 전체(화면, IPC 구조, 빌드·배포 파이프라인, 다국어, 로그), 매장 현장 테스트",
+            "함께한 일: MAC Address로 매장 정보를 내려주는 API와 언어별 AI 응답·TTS는 백엔드와 협의해 받았습니다. 스윙 분석 AI와 서버는 백엔드·AI 담당자가 맡았습니다.",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>핵심 성과</SectionLabel>
+        <BulletList
+          items={[
+            "빌드, 배포, 설치를 자동화해 업데이트 때 매장 방문이 없어졌습니다. 5개 테스트 매장에서 운영 중입니다.",
+            <>
+              main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓)</B>. 차트
+              라이브러리 진입점을 한 파일로 모아 한 화면의 차트가 전 페이지
+              번들에 묶이지 않게 했습니다.
+            </>,
+            <>
+              <code>contextBridge</code>로 권한을 분리해 원격 임의 실행
+              가능성을 없애고, 신규 IPC 등록 위치를 <B>6곳에서 1곳으로</B>{" "}
+              줄였습니다.
+            </>,
+            "특허 공동 발명자 등재: AI 골프 레슨 방법 및 컴퓨팅 장치 (등록번호 10-2952712, 2026.04.17 등록)",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>핵심 의사결정</SectionLabel>
 
         <Decision
           number={1}
           title="운영 사이클의 무인화"
           body={
             <>
-              무인 스크린골프 매장 Electron 앱인데 빌드·S3 업로드·환경설정·로그
-              확인이 모두 수작업. 매장 추가마다 JSON 수정 → 재빌드 → 재배포 →
-              현장 방문 사이클이 반복.{" "}
-              <B>
-                &ldquo;무인화 매장인데 운영 사이클은 무인화되어 있지 않다&rdquo;
-              </B>
-              는 도메인 부조화를 직접 매장 방문 테스트 중 체감. JSON
-              분리(임시방편)와 운영 매뉴얼 정비(코드 변경 없음)도 검토했지만,
-              매장 시공 시 이미 등록되는 <B>MAC Address를 재활용</B>해 전 과정
-              자동화하는 쪽을 선택. 초기 인프라 구축 비용과 Silent 설치로 인한
-              디버깅 가시성 감소 트레이드오프는 일별 로그 로테이션 + IPC 로그
-              통합으로 보완.
+              무인 스크린골프 매장에서 도는 Electron 앱인데, 정작 빌드·S3
+              업로드·환경설정·로그 확인은 전부 수작업이었습니다. 매장을 하나
+              추가할 때마다 JSON 수정 → 재빌드 → 재배포 → 현장 방문이
+              반복됐습니다. 직접 매장을 돌며 테스트하다 보니{" "}
+              <B>&ldquo;무인 매장이라면서 운영은 무인이 아니다&rdquo;</B>
+              라는 모순이 눈에 들어왔습니다. JSON만 떼어내는 임시방편이나,
+              코드를 건드리지 않는 운영 매뉴얼 정비도 검토했지만, 매장 시공 때
+              이미 등록되는 <B>MAC Address를 재활용</B>해 전 과정을 자동화하는
+              쪽을 택했습니다. 초기 인프라 구축 비용이 들고 Silent 설치로 디버깅
+              가시성이 떨어지는 트레이드오프는, 일별 로그 로테이션과 IPC 로그
+              통합으로 메웠습니다.
             </>
           }
           diagram={
@@ -151,9 +168,10 @@ export default function AICoachPortfolioPage() {
           ]}
           retrospective={
             <>
-              <B>다시 한다면</B> JSON 임시방편 단계를 건너뛰고 처음부터 MAC
-              Address 자동 매칭으로 갔을 것. 임시방편 운영 동안 매장 추가마다
-              누적된 매뉴얼 재배포 비용이 결국 더 비쌌음.
+              JSON 임시방편 단계를 건너뛰고 처음부터 MAC Address 자동 매칭으로
+              갔다면 더 나았을 것 같습니다. 임시로 운영하는 동안 매장을 추가할
+              때마다 쌓인 매뉴얼 재배포 비용이, 결국 처음에 제대로 만드는 비용보다
+              더 비쌌습니다.
             </>
           }
         />
@@ -163,19 +181,20 @@ export default function AICoachPortfolioPage() {
           title="ECharts 모듈화 — main bundle 사이즈 사전 통제"
           body={
             <>
-              차트가 lesson note 한 화면에서만 쓰여도 main bundle로 묶여 모든
-              페이지 다운로드 비용에 영향. ECharts 전체 진입점(
-              <code>import * as echarts</code>)을 그대로 쓰면 풀번들이 묶여
-              사용하지 않는 차트 모듈까지 포함됨. 차트 컴포넌트마다 echarts를
-              직접 import하는 흩어진 구조도 검토했지만, 차트 추가 시 등록
-              누락·동기화 비용이 큼. 대신{" "}
+              차트가 lesson note 한 화면에서만 쓰여도, main bundle에 묶이는 순간
+              모든 페이지의 다운로드 비용에 영향을 줍니다. ECharts 전체 진입점(
+              <code>import * as echarts</code>)을 그대로 쓰면 쓰지도 않는 차트
+              모듈까지 풀번들로 딸려 오기 때문입니다. 차트 컴포넌트마다
+              echarts를 직접 import하는 흩어진 구조도 검토했지만, 차트를 추가할
+              때 등록을 빠뜨리거나 동기화하는 비용이 컸습니다. 그래서{" "}
               <B>
-                ECharts import 위치를 한 파일(chartCore.ts)로 통일하고 사용
-                모듈만 명시 등록
-              </B>{" "}
-              + <code>BaseChart</code> 추상화로 소비 차트 컴포넌트가 echarts
-              API를 직접 다루지 않도록 분리. 트레이드오프는 새 차트 컴포넌트
-              추가 시 chartCore에 모듈 등록 누락 위험 — 한 파일 리뷰로 흡수.
+                ECharts import 위치를 한 파일(chartCore.ts)로 모으고 쓰는 모듈만
+                명시적으로 등록
+              </B>
+              한 뒤, <code>BaseChart</code> 추상화를 둬서 각 차트 컴포넌트가
+              echarts API를 직접 다루지 않게 분리했습니다. 새 차트를 추가할 때
+              chartCore에 등록을 빠뜨릴 위험은 남지만, 한 파일만 보면 잡히도록
+              좁혀 뒀습니다.
             </>
           }
           diagram={
@@ -210,17 +229,17 @@ export default function AICoachPortfolioPage() {
           }
           result={[
             <>
-              main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓, 168 KB 감소)</B>{" "}
-              — raw 기준 2.49 MB → 1.96 MB (-530 KB)
+              main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓, 168 KB 감소)</B>,
+              raw 기준 2.49 MB → 1.96 MB (-530 KB)
             </>,
-            "lesson note 1곳 차트가 모든 페이지 main bundle 비용에 전파되던 걸 사전 차단",
+            "lesson note 한 화면의 차트가 모든 페이지 main bundle 비용에 더해지던 것을 막았습니다",
             "신규 차트 추가 시 chartCore.ts 한 파일 등록만으로 모든 사용처 자동 적용",
           ]}
           retrospective={
             <>
-              <B>알게 된 것</B> — 사용처가 한 곳뿐인 라이브러리라도 main
-              bundle에 묶이면 전 페이지 비용. 도입 시점에 진입점 통제 안 하면
-              사후 마이그레이션 비용이 누적되는 영역.
+              사용처가 한 곳뿐인 라이브러리라도 main bundle에 묶이면 결국 전
+              페이지가 그 비용을 나눠 집니다. 도입하는 시점에 진입점을 잡아 두지
+              않으면 나중에 마이그레이션 비용이 쌓이는 영역이라는 걸 배웠습니다.
             </>
           }
         />
@@ -230,16 +249,19 @@ export default function AICoachPortfolioPage() {
           title="contextIsolation 권한 분리 — 보안 + DX 동시 개선"
           body={
             <>
-              Electron 앱이 원격 호스팅 SPA URL을 <code>loadURL</code>하는 구조.{" "}
-              <code>contextIsolation: false</code> +{" "}
-              <code>nodeIntegration: true</code> 조합은 SPA 침해 시{" "}
+              Electron 앱이 원격 호스팅 SPA URL을 <code>loadURL</code>하는
+              구조였습니다. <code>contextIsolation: false</code> +{" "}
+              <code>nodeIntegration: true</code> 조합은, SPA가 한 번 침해당하면{" "}
               <code>require(&apos;child_process&apos;)</code>로 매장 PC에서 임의
-              명령 실행이 가능한 권한 노출 상태. CSP 헤더 강화(권한 노출
-              그대로)와 SPA 패키지 번들링(자동 업데이트 흐름과 충돌) 대신,{" "}
-              <B>contextBridge 화이트리스트 + 타입 통합</B>으로 전면 재설계. 6곳
-              복붙되어 있던 타입 선언/초기화 블록을 <code>electron.d.ts</code>로
-              통합하고 23곳 <code>ipcRenderer</code> 직접 호출을 새 API로 일괄
-              전환 — IPC 직렬화 비용은 마이크로초 단위라 사용자 인지 불가.
+              명령까지 실행할 수 있는 권한이 그대로 열려 있는 상태였습니다. CSP
+              헤더만 강화하면 권한 노출은 그대로고, SPA 패키지 번들링은 자동
+              업데이트 흐름과 충돌해서, 대신{" "}
+              <B>contextBridge 화이트리스트 + 타입 통합</B>으로 전면
+              재설계했습니다. 여러 파일에 복붙돼 있던 타입 선언·초기화 블록을{" "}
+              <code>electron.d.ts</code> 한 곳으로 합치고, 렌더러 6개 파일에
+              흩어져 있던 <code>ipcRenderer</code> 직접 호출을 단일 브릿지로
+              정리했습니다. IPC 직렬화 비용은 마이크로초 단위라 사용자는 차이를
+              느끼지 못합니다.
             </>
           }
           result={[
@@ -256,8 +278,9 @@ export default function AICoachPortfolioPage() {
           ]}
           retrospective={
             <>
-              <B>알게 된 것</B> — contextBridge 화이트리스트는 권한도 줄이고 IPC
-              setup 중복도 제거. 보안과 DX가 같은 방향일 때가 있음.
+              contextBridge 화이트리스트는 권한도 줄이면서 IPC setup 중복까지
+              같이 없애 줬습니다. 보안과 DX가 같은 방향을 가리키는 순간이 있다는
+              걸 알았습니다.
             </>
           }
         />
@@ -267,14 +290,16 @@ export default function AICoachPortfolioPage() {
           title="다국어 동기화 — 정적 텍스트 치환을 넘어"
           body={
             <>
-              일본 진출 1호점 대응을 위해 다국어 지원 필요. i18next 정적
-              텍스트만 처리(UI는 일본어, AI는 한국어 → 일관성 깨짐)는 글로벌
-              매장 운영의 진정한 의미와 맞지 않아, <code>languageTypeCd</code>를
-              모든 서버 요청에 동행시켜 <B>AI 응답·Clova TTS까지 동기화</B>하는
-              구조 선택. 트레이드오프는 코칭 도중 언어 변경 시 이전 언어 음성이
-              TTS 큐에 잔존(실사용 흐름에서 발견) → 변경 직전{" "}
-              <code>stopCurrentTTS</code>·<code>resetTTSSession</code> 강제 호출
-              + 변경 가능 시점을 메인 진입 모달로 제한하는 UX 정책으로 해결.
+              일본 진출 1호점을 준비하면서 다국어 지원이 필요해졌습니다. 그런데
+              i18next로 정적 텍스트만 번역하면 UI는 일본어인데 AI는 한국어로
+              답해 일관성이 깨지고, 이건 글로벌 매장 운영의 의미와도 맞지
+              않았습니다. 그래서 <code>languageTypeCd</code>를 모든 서버 요청에
+              함께 실어 <B>AI 응답과 Clova TTS까지 한 번에 동기화</B>하는 구조를
+              택했습니다. 다만 코칭 도중 언어를 바꾸면 이전 언어 음성이 TTS 큐에
+              남는 문제가 있었는데(실사용 흐름에서 발견했습니다), 변경 직전에{" "}
+              <code>stopCurrentTTS</code>·<code>resetTTSSession</code>을 강제로
+              호출하고 언어를 바꿀 수 있는 시점을 메인 진입 모달로 제한하는 UX
+              정책으로 해결했습니다.
             </>
           }
           result={[
@@ -284,9 +309,9 @@ export default function AICoachPortfolioPage() {
           ]}
           retrospective={
             <>
-              <B>아쉬운 점</B> — 언어 전환 가능 시점을 메인 진입 모달로만 제한한
-              건 임시 정책. TTS 큐를 routing 시점에 자동 reset하는 구조가 더
-              깨끗했을 것.
+              언어 전환 시점을 메인 진입 모달로만 묶어 둔 건 사실 임시
+              정책이었습니다. TTS 큐를 routing 시점에 자동으로 reset하는
+              구조였다면 더 깨끗했을 것 같습니다.
             </>
           }
         />
@@ -296,50 +321,31 @@ export default function AICoachPortfolioPage() {
           title="STOMP 무응답 장애 — sessionStorage 캐싱과 서버 세션 ID 폐기 구조 충돌 식별"
           body={
             <>
-              STOMP 재연결은 성공하는데 메시지 응답이 끊기는 무응답 장애.
-              재연결 자체는 정상이라 네트워크 문제로 보이지 않았고, 로그를
-              추적해 클라이언트가{" "}
+              STOMP 재연결은 성공하는데 메시지 응답만 끊기는, 무응답 장애가 자주
+              났습니다. 재연결 자체는 멀쩡해서 네트워크 문제로는 보이지
+              않았는데, 로그를 따라가 보니 클라이언트는{" "}
               <code>sessionStorage</code>에 캐싱한{" "}
-              <B>최초 세션 ID로 구독 경로를 구성</B>하는 반면, 서버는 매
+              <B>최초 세션 ID로 구독 경로를 고정</B>하는 반면, 서버는 매
               연결마다 <code>user-name</code> 헤더로 새 세션 ID를 발급하고{" "}
-              <B>이전 ID를 즉시 폐기</B>하는 구조임을 식별. 클라이언트가
-              폐기된 ID로 구독하니 메시지가 도달할 수 없었던 것. 클라이언트
-              캐싱 분기를 제거하고 서버 발급 ID만 사용하도록 변경해 재발을
-              구조적으로 차단.
+              <B>이전 ID를 바로 폐기</B>하는 구조였습니다. 클라이언트가 이미
+              버려진 ID로 구독하고 있었으니 메시지가 도달할 수 없었던 겁니다.
+              클라이언트 캐싱 분기를 걷어내고 서버가 발급한 ID만 쓰도록 바꿔
+              재발을 구조적으로 막았습니다.
             </>
           }
           result={[
-            "STOMP 재연결 후 메시지 무응답 장애 원인 식별 — sessionStorage 캐싱 분기 제거",
+            "STOMP 재연결 후 메시지 무응답 장애의 원인을 찾고 sessionStorage 캐싱 분기 제거",
             "서버 발급 세션 ID만 사용하는 구조로 전환해 재발 차단",
             "재연결 성공 / 메시지 무응답 분리 진단으로 원인 범위 좁혀 해결",
           ]}
           retrospective={
             <>
-              <B>알게 된 것</B> — STOMP 재연결 성공과 메시지 수신은 별개.
-              재연결이 됐다고 구독 경로까지 유효하다고 가정한 게 함정이었음.
-              서버가 세션 ID를 어떻게 생성·폐기하는지 먼저 확인했다면 더 빠르게
-              좁힐 수 있었을 것.
+              STOMP 재연결 성공과 메시지 수신은 별개입니다. 재연결이 됐으니
+              구독 경로도 당연히 살아 있겠거니 가정한 게 함정이었습니다. 서버가
+              세션 ID를 어떻게 만들고 폐기하는지 먼저 확인했다면 원인을 훨씬 빨리
+              좁힐 수 있었을 것 같습니다.
             </>
           }
-        />
-      </section>
-
-      <section className="mb-14">
-        <SectionLabel>Result</SectionLabel>
-        <BulletList
-          items={[
-            <>
-              main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓)</B> — lesson
-              note 차트가 모든 페이지 비용으로 전파되던 걸 도입 시점에 사전 차단
-            </>,
-            <>
-              <code>contextBridge</code> 기반 보안 모델 재설계 — 원격에서 매장
-              PC를 임의로 제어 가능했던 권한 노출 제거, 신규 IPC 등록 절차{" "}
-              <B>6곳 → 1곳</B>
-            </>,
-            "GTS · Nvisage · K-Golf 본사 + 회사 직영 + GTS 일본 수출 매장 = 5개 테스트 매장 가동 (다실 구조는 1룸 운영)",
-            "특허 출원 공동 발명자 등재 (10-2025-0133876)",
-          ]}
         />
       </section>
     </div>
