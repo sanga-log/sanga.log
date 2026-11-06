@@ -213,7 +213,7 @@ const STRENGTHS = [
   {
     title: "데이터로 검증",
     proof:
-      "출시 후 결제와 쿠폰 데이터를 매일 대조해 에러 없이 옛 시스템에서 돌던 매장을 찾았습니다. AI 에이전트의 결론은 코드와 실제 데이터로 확인한 뒤에만 씁니다.",
+      "출시 후 결제와 쿠폰 데이터를 매일 대조해, 에러가 나지 않아 눈에 띄지 않던 옛 시스템 매장을 찾았습니다. AI 에이전트의 결론은 코드와 실제 데이터로 확인한 뒤에만 씁니다.",
   },
 ];
 
@@ -282,7 +282,7 @@ export default function ResumePage() {
               logo={{ src: "/kimcaddie-logo.png", alt: "김캐디 로고" }}
               name="주식회사 김캐디"
               period="2025.06 — 현재"
-              description="실내 골프 마켓플레이스. 무인 매장 170개+ 운영, 12,000여 골프 시설 예약 지원, 누적 200만+ 다운로드. Product Engineer (2026.06 — 현재) · Frontend Engineer (2025.06 — 2026.06)"
+              description="실내 골프 마켓플레이스. 무인 매장 170+개 운영, 12,000여 골프 시설 예약 지원, 누적 200만+ 다운로드. Product Engineer (2026.06 — 현재) · Frontend Engineer (2025.06 — 2026.06)"
             />
             <ProjectDivider accent="teal" />
 
