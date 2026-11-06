@@ -226,11 +226,10 @@ export default function ResumePage() {
           이상아
         </h1>
         <p className="mt-7 text-base leading-[1.7] text-[#6b7790] sm:text-lg">
-          기술영업 7년을 거쳐 개발자가 됐고, 고객의 요구를 제품으로 바꾸는 일을
-          합니다. 900개 매장이 쓰는 B2B SaaS와 무인 매장 Electron 앱에서 문제를
-          정의하고, 정책을 정하고, 화면부터 서버·어드민까지 구현한 뒤, 출시 후
-          데이터로 결과를 확인합니다. 조사·구현·검증은 AI 에이전트에 나눠 맡기고,
-          결정과 최종 검증은 직접 합니다.
+          기술영업 7년을 거쳐 개발자가 됐습니다. 900+개 매장이 쓰는 B2B SaaS와
+          무인 매장에서 사용 가능한 Electron 앱을 만들고 있습니다. 고객의
+          말에서 문제를 정의하는 일부터 화면·서버·어드민 구현, 출시 후 지표
+          확인까지 맡으며, AI 에이전트를 활용해 일의 속도를 높이고 있습니다.
         </p>
         <div className="mt-8 flex items-center gap-4 text-base font-medium">
           <a
