@@ -451,7 +451,7 @@ export default function ResumePage() {
               items={[
                 <>
                   사장님 웹 nginx에 gzip과 정적 파일 장기 캐시를 적용해{" "}
-                  <B>ALB 일평균 전송량 91%↓, 요청 수 48%↓</B> (배포 전후
+                  <B>ALB 일평균 전송량 91%↓, 요청 수 40%↓</B> (배포 전후
                   CloudWatch 비교)
                 </>,
                 <>
