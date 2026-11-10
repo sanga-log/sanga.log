@@ -331,8 +331,8 @@ export default function ResumePage() {
                   슬롯 선택 시점에 차단 (동시성 충돌은 백엔드 최종 검증)
                 </>,
                 <>
-                  결제 결과가 최대 5초 안에 온다는 것을 백엔드와 확인해 WebSocket
-                  대신 1초 간격 5회 폴링으로 설계,{" "}
+                  회원권 결제 결과가 최대 5초 안에 온다는 것을 백엔드와 확인해
+                  WebSocket 대신 1초 간격 5회 폴링으로 설계,{" "}
                   <B>대기 중 결제 버튼 비활성화로 중복 청구 차단</B>
                 </>,
                 <>
@@ -619,7 +619,7 @@ export default function ResumePage() {
             <CompanyHeader
               name="효성강전(주)"
               period="2014.08 — 2021.12"
-              description="효성중공업 전동기·감속기 공식 특약점. 영업부 과장"
+              description="효성중공업 전동기·감속기 공식 특약점. Technical Sales Manager"
             />
             <ProjectDivider accent="neutral" />
             <Project
@@ -632,8 +632,8 @@ export default function ResumePage() {
               items={[
                 <>
                   고객사 플랜트 기술사양서에서 취부방식·보호등급·주위온도,
-                  효율·방폭·선급 인증 등 <B>요구 사양을 정리</B>해 모델
-                  선정·견적·입찰 담당, 본사와 단가·납기 협상
+                  효율·방폭·선급 인증 등 <B>요구 사양을 정리</B>해 견적·입찰
+                  담당, 본사와 단가·납기 협상
                 </>,
                 <>
                   고객 요구와 본사 설계팀 스펙의 정합성을 발주 전에 검토하고 최종
