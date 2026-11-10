@@ -67,7 +67,7 @@ export default function AdSubscribePortfolioPage() {
         <BulletList
           items={[
             "테이블 설계부터 출시 뒤 운영까지 7개 레포 직접 구현 (Kotlin/Spring 5, Django 1, React 1)",
-            "출시 후 3개월 유료 갱신 성공률 96.6%",
+            "출시 후 12주 유료 갱신 성공률 96.6%",
             <>
               <code>PENDING → ACTIVE/FAILED</code> 상태 전이로, 결제 실패 건이 구독
               중으로 보이던 문제 해결
