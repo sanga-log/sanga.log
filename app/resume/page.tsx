@@ -322,7 +322,7 @@ export default function ResumePage() {
               accent="teal"
               name="Kaddie Web — 해외 실내 골프 예약 B2C 웹 서비스"
               period="2025.09 — 현재"
-              description="김캐디의 해외 스크린골프·연습장 예약 웹입니다. 회사 최초 해외 매출을 만든 서비스로, 태국·필리핀·미국 매장에서 운영 중입니다. 회원가입·로그인부터 예약, 회원권 구매·취소, 예약 내역까지 고객 화면 전반과 룸별 요금·해외 세금 계산을 개발했습니다."
+              description="김캐디의 해외 스크린골프·연습장 예약 웹입니다. 회사 최초 해외 매출을 만든 서비스로, 태국·필리핀·미국 매장에서 운영 중입니다. 회원가입·로그인부터 예약, 회원권 구매·취소, 예약 내역까지 고객 화면 전반을 개발했습니다."
               tags={["React", "TypeScript", "Recoil", "styled-components"]}
               items={[
                 <>
@@ -433,9 +433,9 @@ export default function ResumePage() {
                   CloudWatch 비교)
                 </>,
                 <>
-                  <code>weekday</code> 필드에 숫자 코드가 섞인 요금 데이터를
-                  백엔드에 제안해 <code>price_category_cd</code> 배열과 상수로
-                  분리, 구 데이터는 폴백 매핑으로 <B>점진 전환</B>
+                  숫자 코드와 글자로 섞여 있던 요금 분류를{" "}
+                  <B>요일 상수(<code>price_category_cd</code>)로 바꾸자고 백엔드에
+                  제안</B>, 프론트는 옛 데이터를 새 분류로 읽는 폴백 매핑 구현
                 </>,
                 <>
                   최종 제출에 몰려 있던 검증을{" "}
