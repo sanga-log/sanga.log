@@ -320,16 +320,10 @@ export default function ResumePage() {
 
             <Project
               accent="teal"
-              name="Kaddie Web — 글로벌 골프장 예약 B2C 웹 서비스"
+              name="Kaddie Web — 해외 실내 골프 예약 B2C 웹 서비스"
               period="2025.09 — 현재"
-              description="김캐디의 해외 스크린골프·연습장 예약 웹입니다. 회사 최초 해외 매출을 만든 서비스로, 태국·필리핀·미국 매장에서 운영 중입니다. 예약 슬롯 검증, 결제 결과 폴링, 다국어 빌드 파이프라인을 맡았습니다."
-              tags={[
-                "React",
-                "TypeScript",
-                "Recoil",
-                "styled-components",
-                "i18next",
-              ]}
+              description="김캐디의 해외 스크린골프·연습장 예약 웹입니다. 회사 최초 해외 매출을 만든 서비스로, 태국·필리핀·미국 매장에서 운영 중입니다. 회원가입·로그인부터 예약, 회원권 구매·취소, 예약 내역까지 고객 화면 전반과 룸별 요금·해외 세금 계산을 개발했습니다."
+              tags={["React", "TypeScript", "Recoil", "styled-components"]}
               items={[
                 <>
                   운영시간·게임 소요시간·룸별 기예약·현재 이전 시간,{" "}

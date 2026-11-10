@@ -41,12 +41,12 @@ const projects: Project[] = [
   },
   {
     slug: "kaddie-web",
-    name: "Kaddie Web — 글로벌 골프장 예약 B2C 웹 서비스",
+    name: "Kaddie Web — 해외 실내 골프 예약 B2C 웹 서비스",
     company: "김캐디",
     period: "2025.09 — 현재",
     summary:
-      "해외 스크린골프·연습장을 예약하는 B2C 웹입니다. 회사의 첫 해외 매출을 만든 서비스로, 예약 슬롯 검증, 결제 결과 폴링, 6개 언어 번역 빌드 파이프라인을 맡았습니다.",
-    tags: ["React", "TypeScript", "Recoil", "react-query", "i18next"],
+      "해외 스크린골프·연습장을 예약하는 B2C 웹입니다. 회사의 첫 해외 매출을 만든 서비스로, 회원가입부터 예약·회원권 구매·예약 내역까지 고객 화면 전반을 개발하고 6개 언어 번역 빌드 파이프라인을 만들었습니다.",
+    tags: ["React", "TypeScript", "Recoil", "styled-components"],
     video: "/videos/kaddie.mp4",
   },
   {
