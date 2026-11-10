@@ -204,9 +204,9 @@ export default function ResumePage() {
         </h1>
         <p className="mt-7 text-base leading-[1.7] text-[#6b7790] sm:text-lg">
           기술영업 7년을 거쳐 개발자가 됐습니다. 프론트엔드 4년차이고, 지금은
-          김캐디 Product Engineer입니다. 900+개 매장이 쓰는 B2B SaaS와 무인 매장 Electron 앱에서
-          고객 문제 정의부터 구현, 출시 후 지표 확인까지 합니다. 반복되는
-          요청은 AI 스킬로 만들어 영업·디자이너가 직접 처리하게 합니다.
+          김캐디 Product Engineer입니다. 1,000개 넘는 매장이 사용하는 B2B
+          SaaS와 무인 매장 앱에서 고객 문제를 정의하고, 직접 만들어 출시 뒤
+          지표로 확인합니다.
         </p>
         <div className="mt-8 flex items-center gap-4 text-base font-medium">
           <a
@@ -415,7 +415,7 @@ export default function ResumePage() {
               accent="teal"
               name="김캐디 사장님 — 스크린골프 매장 B2B SaaS"
               period="2025.07 — 현재"
-              description="골프 매장 사장님을 위한 B2B SaaS입니다. PC와 모바일 프론트엔드를 담당하고 있고, 국내 900개 넘는 매장이 구독 중입니다."
+              description="골프 매장 사장님을 위한 B2B SaaS입니다. PC와 모바일 프론트엔드를 담당하고 있고, 국내 1,000개 넘는 매장이 사용하고 있습니다."
               tags={[
                 "React",
                 "TypeScript",
@@ -434,8 +434,8 @@ export default function ResumePage() {
                 </>,
                 <>
                   숫자 코드와 글자로 섞여 있던 요금 분류를{" "}
-                  <B>요일 상수(<code>price_category_cd</code>)로 바꾸자고 백엔드에
-                  제안</B>, 프론트는 옛 데이터를 새 분류로 읽는 폴백 매핑 구현
+                  <B>요일 상수로 바꾸자고 백엔드에 제안</B>, 프론트는 옛
+                  데이터를 새 분류로 읽는 폴백 매핑 구현
                 </>,
                 <>
                   최종 제출에 몰려 있던 검증을{" "}
@@ -459,21 +459,8 @@ export default function ResumePage() {
               items={[
                 <>
                   <span className="block">
-                    주간 배포 요약 슬랙 자동화: GitHub 각 레포 PR을 수집·요약해
-                    전사 슬랙 채널에 발행, 비개발자도 배포 내역 확인 가능
-                  </span>
-                  <span className="mt-2 block">
-                    <BlogBadge
-                      href="https://blog.kimcaddie.com/slack-autobot-skill"
-                      label="주간 배포 요약 슬랙 자동화"
-                      accent="teal"
-                    />
-                  </span>
-                </>,
-                <>
-                  <span className="block">
-                    SVG 도면 변환 자동화: 매장 도면 room_id 매핑 수작업(1시간
-                    이상)을 몇 분으로 줄이고 디자이너가 혼자 실행
+                    SVG 도면 변환 자동화: 매장 도면 room_id 매핑 수작업을 Claude
+                    스킬로 옮겨 디자이너가 개발자 없이 직접 변환
                   </span>
                   <span className="mt-2 block">
                     <BlogBadge
