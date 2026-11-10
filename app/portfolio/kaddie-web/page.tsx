@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function KaddieWebPortfolioPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
+    <div className="max-w-3xl mx-auto px-6 py-16 break-keep [overflow-wrap:anywhere]">
       <Link
         href="/portfolio"
         className="inline-flex items-center gap-1.5 text-xs font-black tracking-widest uppercase text-gray-400 hover:text-black transition-colors mb-12"
@@ -43,7 +43,7 @@ export default function KaddieWebPortfolioPage() {
         <h1 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight">
           Kaddie Web
         </h1>
-        <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
+        <p className="text-base leading-relaxed text-gray-500 mt-4 mb-5">
           해외 스크린골프·연습장 예약 B2C 웹입니다. 회사의 첫 해외 매출을 만든
           서비스로, 태국·필리핀·미국 매장에서 운영 중입니다. 예약 슬롯 검증, 결제
           결과 폴링, 다국어 빌드 파이프라인을 맡았습니다.
@@ -59,6 +59,40 @@ export default function KaddieWebPortfolioPage() {
             <Tag key={t}>{t}</Tag>
           ))}
         </div>
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>핵심 성과</SectionLabel>
+        <BulletList
+          items={[
+            "회사 최초 해외 매출을 만든 서비스. 태국·필리핀·미국 3개국에서 운영 중",
+            "네 가지 조건을 모두 통과한 슬롯만 활성화해, 매장 규칙과 어긋난 예약을 폼 제출 전에 막았습니다",
+            <>
+              <code>react-query</code> 폴링으로 결제 결과를 확정하고, 대기 중 결제
+              버튼을 잠가 이중 청구를 막았습니다
+            </>,
+            "Google Sheets 기반 6개 언어 번역 파이프라인. 변경된 부분만 빌드에 반영",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>실제 화면</SectionLabel>
+        <video
+          src="/videos/kaddie.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          controls
+          aria-label="회원권을 카드로 사고 결제 결과를 기다린 뒤, 막힌 시간을 피해 예약하고 회원권으로 결제하는 화면 녹화"
+          className="w-full h-auto border border-gray-200"
+        />
+        <p className="mt-3 text-xs leading-relaxed text-gray-500">
+          실제 예약 웹 화면에 예시 데이터를 넣어 재현했습니다. 매장·회원·금액은 모두
+          지어낸 값입니다.
+        </p>
       </section>
 
       <section className="mb-12">
@@ -78,21 +112,6 @@ export default function KaddieWebPortfolioPage() {
           items={[
             "직접 한 일: 예약 슬롯 검증 로직, 결제 결과 폴링 화면, 다국어 prebuild 파이프라인과 시크릿 주입 구성",
             "함께한 일: 결제 결과 도착 시간(최대 5초)과 실패 판정 기준은 백엔드와 맞췄고, 동시성 충돌은 백엔드가 최종 검증합니다. 번역 내용은 운영 담당자가 Google Sheets에서 관리합니다.",
-          ]}
-        />
-      </section>
-
-      <section className="mb-12">
-        <SectionLabel>핵심 성과</SectionLabel>
-        <BulletList
-          items={[
-            "회사 최초 해외 매출을 만든 서비스. 태국·필리핀·미국 3개국에서 운영 중",
-            "네 가지 조건을 모두 통과한 슬롯만 활성화해, 매장 규칙과 어긋난 예약을 폼 제출 전에 막았습니다",
-            <>
-              <code>react-query</code> 폴링으로 결제 결과를 확정하고, 대기 중 결제
-              버튼을 잠가 이중 청구를 막았습니다
-            </>,
-            "Google Sheets 기반 6개 언어 번역 파이프라인. 변경된 부분만 빌드에 반영",
           ]}
         />
       </section>
@@ -133,6 +152,8 @@ export default function KaddieWebPortfolioPage() {
                 사용자가 무엇을 누를지 미리 알 수 없습니다. (b){" "}
                 <B>클라만 검증</B>. 같은 시간대에 다른 사용자가 몇 분 차이로
                 예약하는 동시성 충돌은 클라이언트가 알 수 없어 정합성이 깨집니다.
+              </p>
+              <p>
                 그래서 결국 (c) <B>양쪽 검증</B>을 택했습니다. 프론트는 “선택
                 가능한 슬롯만 노출”로 UX를, 백엔드는 “최종 정합성”으로 동시성
                 충돌을 맡습니다. 두 책임이 다르니 한쪽만으로는 부족합니다.
@@ -315,7 +336,10 @@ export default function KaddieWebPortfolioPage() {
                 때마다 개발자가 코드를 손대는 비용을 줄이는 게 목표였습니다.{" "}
                 <B>Google Sheets에서 번역을 추가하거나 수정하면</B> 다음 빌드 때
                 변경된 부분만 감지해 <B>6개 언어 파일에 자동으로 반영</B>되는
-                파이프라인을 만들었습니다. 행마다 MD5 해시로 변경 여부를 비교해
+                파이프라인을 만들었습니다.
+              </p>
+              <p>
+                행마다 MD5 해시로 변경 여부를 비교해
                 수정된 항목만 부분 갱신하고, 번역이 빠진 항목은 기본 언어(영어)로
                 대체해 빈 화면이 뜨지 않게 했습니다. 로컬과 CI 모두에 필요한
                 Google Sheets 인증 키는{" "}

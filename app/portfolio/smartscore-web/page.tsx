@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 export default function SmartsocreWebPortfolioPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
+    <div className="max-w-3xl mx-auto px-6 py-16 break-keep [overflow-wrap:anywhere]">
       <Link
         href="/portfolio"
         className="inline-flex items-center gap-1.5 text-xs font-black tracking-widest uppercase text-gray-400 hover:text-black transition-colors mb-12"
@@ -42,7 +42,7 @@ export default function SmartsocreWebPortfolioPage() {
         <h1 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight">
           국내 공식 웹사이트 개편
         </h1>
-        <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
+        <p className="text-base leading-relaxed text-gray-500 mt-4 mb-5">
           골프 O2O 플랫폼 공식 웹사이트의 프론트엔드를 혼자 전면 개편했습니다.
           도메인 이전, 성능, SEO, 폼 검증을 다시 설계했습니다.
         </p>
@@ -51,6 +51,42 @@ export default function SmartsocreWebPortfolioPage() {
             <Tag key={t}>{t}</Tag>
           ))}
         </div>
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>핵심 성과</SectionLabel>
+        <BulletList
+          items={[
+            <>
+              LCP <B>6.6s → 0.9s (86%↓)</B>, CLS 0.737 → 0. 이미지 CDN 없이
+              코드 변경만으로 얻은 수치입니다
+            </>,
+            <>
+              Lighthouse SEO <B>83 → 92점</B>. 도메인 이전과 동시에 SEO 세팅을
+              끝내 색인 공백을 줄였습니다
+            </>,
+            "프론트엔드를 혼자 맡아 도메인 이전, 다국어, 성능, SEO, 폼 검증을 전면 개편",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>실제 화면</SectionLabel>
+        <video
+          src="/videos/smartscore-web.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          controls
+          aria-label="국내용 사이트의 주요 섹션과 문의 폼 검증을 보여 준 뒤, 언어를 English로 바꿔 해외용 사이트로 넘어가는 화면 녹화"
+          className="w-full h-auto border border-gray-200"
+        />
+        <p className="mt-3 text-xs leading-relaxed text-gray-500">
+          2026년 11월에 공개 사이트(국내용·해외용)를 녹화했습니다. 문의 폼은 녹화
+          브라우저에서 전송을 막아 두고 검증 화면만 보여 줍니다.
+        </p>
       </section>
 
       <section className="mb-12">
@@ -75,23 +111,6 @@ export default function SmartsocreWebPortfolioPage() {
       </section>
 
       <section className="mb-12">
-        <SectionLabel>핵심 성과</SectionLabel>
-        <BulletList
-          items={[
-            <>
-              LCP <B>6.6s → 0.9s (86%↓)</B>, CLS 0.737 → 0. 이미지 CDN 없이
-              코드 변경만으로 얻은 수치입니다
-            </>,
-            <>
-              Lighthouse SEO <B>83 → 92점</B>. 도메인 이전과 동시에 SEO 세팅을
-              끝내 색인 공백을 줄였습니다
-            </>,
-            "프론트엔드를 혼자 맡아 도메인 이전, 다국어, 성능, SEO, 폼 검증을 전면 개편",
-          ]}
-        />
-      </section>
-
-      <section className="mb-12">
         <SectionLabel>핵심 의사결정</SectionLabel>
 
         <Decision
@@ -99,14 +118,24 @@ export default function SmartsocreWebPortfolioPage() {
           title="LCP 6.6s → 0.9s — 이미지 포맷 전환 + 로딩 우선순위 조정"
           body={
             <>
-              배포 직후 Lighthouse로 재 보니 LCP가 6.6s, CLS가 0.737이었습니다.
-              원인을 따라가 보니 히어로 이미지가 JPEG로 서빙되고 있었고,{" "}
-              <code>fetchpriority</code>나 <code>preload</code> 없이 일반 이미지
-              로딩 순서를 그대로 따르고 있었습니다. 이미지 CDN은 비용·운영 부담이
-              있고 lazy loading만으로는 LCP가 나아지지 않아, <B>WebP 전환 +
-              preload + fetchpriority=&quot;high&quot; 조합</B>을 골랐습니다.
-              코드만 바꿔서 가장 크게 줄일 수 있는 방향이었습니다. CLS는
-              이미지에 width/height를 명시해 레이아웃이 밀리지 않게 잡았습니다.
+              <p>
+                배포 직후 Lighthouse로 재 보니 LCP가 6.6s, CLS가
+                0.737이었습니다. 원인을 따라가 보니 히어로 이미지가 JPEG로
+                서빙되고 있었고, <code>fetchpriority</code>나{" "}
+                <code>preload</code> 없이 일반 이미지 로딩 순서를 그대로 따르고
+                있었습니다.
+              </p>
+              <p>
+                이미지 CDN은 비용·운영 부담이 있고 lazy loading만으로는 LCP가
+                나아지지 않아,{" "}
+                <B>WebP 전환 + preload + fetchpriority=&quot;high&quot; 조합</B>
+                을 골랐습니다. 코드만 바꿔서 가장 크게 줄일 수 있는
+                방향이었습니다.
+              </p>
+              <p>
+                CLS는 이미지에 width/height를 명시해 레이아웃이 밀리지 않게
+                잡았습니다.
+              </p>
             </>
           }
           diagram={
@@ -166,17 +195,21 @@ export default function SmartsocreWebPortfolioPage() {
           title="도메인 이전 — 검색 색인 리셋에 대비해 SEO를 이전과 동시에 세팅"
           body={
             <>
-              도메인을 옮기면 기존 색인이 새 도메인으로 곧장 이어지지 않아 검색
-              노출이 떨어질 수 있다는 걸 미리 알고 있었습니다. 단순히 301
-              리다이렉트만 걸면, 크롤러가 새 도메인을 처음부터 다시 색인하는 동안
-              노출이 급감할 수 있습니다. 그래서 이전과 동시에 SEO 세팅을 끝내기로
-              하고,{" "}
-              <B>
-                사이트맵·robots.txt 재구성 + Schema.org 구조화 데이터 + Unhead
-                기반 라우터 레벨 메타데이터 통합 관리
-              </B>
-              를 한꺼번에 처리했습니다. 크롤러가 새 도메인에서 필요한 신호를
-              곧바로 다 찾을 수 있게 미리 깔아 둔 셈입니다.
+              <p>
+                도메인을 옮기면 기존 색인이 새 도메인으로 곧장 이어지지 않아
+                검색 노출이 떨어질 수 있다는 걸 미리 알고 있었습니다. 단순히 301
+                리다이렉트만 걸면, 크롤러가 새 도메인을 처음부터 다시 색인하는
+                동안 노출이 급감할 수 있습니다.
+              </p>
+              <p>
+                그래서 이전과 동시에 SEO 세팅을 끝내기로 하고,{" "}
+                <B>
+                  사이트맵·robots.txt 재구성 + Schema.org 구조화 데이터 + Unhead
+                  기반 라우터 레벨 메타데이터 통합 관리
+                </B>
+                를 한꺼번에 처리했습니다. 크롤러가 새 도메인에서 필요한 신호를
+                곧바로 다 찾을 수 있게 미리 깔아 둔 셈입니다.
+              </p>
             </>
           }
           result={[
@@ -210,16 +243,24 @@ export default function SmartsocreWebPortfolioPage() {
           title="폼 검증 — 풀 라이브러리 대신 Zod만 도입"
           body={
             <>
-              글로벌 홈페이지를 처음 만들 때는 폼 검증 로직이 필드마다 흩어져
-              있어, 기획이 바뀔 때마다 손대기가 어려웠습니다. 그래서 이번엔
-              처음부터 <B>검증 로직을 한 곳으로 모으는 구조</B>를 잡기로 했습니다.
-              vee-validate·vuelidate 같은 풀 폼 라이브러리도 검토했지만, 폼
-              규모가 작고 상태 관리도 Vue 기본으로 충분해{" "}
-              <B>검증 로직만 Zod로 떼어내는</B> 쪽을 택했습니다. 정규표현식을
-              단일 스키마로 모으고, <code>isSubmitted</code> 상태로 첫 진입
-              에러는 숨기다가 제출을 시도한 뒤부터 실시간 검증이 동작하도록 UX를
-              직접 구현했습니다. 트레이드오프는 UX 패턴을 직접 짜야 한다는 점인데,
-              폼이 복잡해지면 풀 라이브러리로 가는 편이 더 빠를 수 있습니다.
+              <p>
+                글로벌 홈페이지를 처음 만들 때는 폼 검증 로직이 필드마다 흩어져
+                있어, 기획이 바뀔 때마다 손대기가 어려웠습니다. 그래서 이번엔
+                처음부터 <B>검증 로직을 한 곳으로 모으는 구조</B>를 잡기로
+                했습니다.
+              </p>
+              <p>
+                vee-validate·vuelidate 같은 풀 폼 라이브러리도 검토했지만, 폼
+                규모가 작고 상태 관리도 Vue 기본으로 충분해{" "}
+                <B>검증 로직만 Zod로 떼어내는</B> 쪽을 택했습니다. 정규표현식을
+                단일 스키마로 모으고, <code>isSubmitted</code> 상태로 첫 진입
+                에러는 숨기다가 제출을 시도한 뒤부터 실시간 검증이 동작하도록
+                UX를 직접 구현했습니다.
+              </p>
+              <p>
+                트레이드오프는 UX 패턴을 직접 짜야 한다는 점인데, 폼이
+                복잡해지면 풀 라이브러리로 가는 편이 더 빠를 수 있습니다.
+              </p>
             </>
           }
           result={[

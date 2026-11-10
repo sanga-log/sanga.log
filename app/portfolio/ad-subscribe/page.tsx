@@ -34,7 +34,7 @@ const BLOG_LINK_CLASS =
 
 export default function AdSubscribePortfolioPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
+    <div className="max-w-3xl mx-auto px-6 py-16 break-keep [overflow-wrap:anywhere]">
       <Link
         href="/portfolio"
         className="inline-flex items-center gap-1.5 text-xs font-black tracking-widest uppercase text-gray-400 hover:text-black transition-colors mb-12"
@@ -47,10 +47,11 @@ export default function AdSubscribePortfolioPage() {
         <h1 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight">
           광고 구독 풀스택 구축
         </h1>
-        <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
+        <p className="text-base leading-relaxed text-gray-500 mt-4 mb-5">
           매장 사장님이 마커 광고·리스팅 광고를 월 구독으로 신청하고 쿠폰까지
-          운영하는 상품입니다. 프론트엔드 개발자로서 처음 백엔드까지 맡아, 테이블
-          설계부터 화면, API, 결제 결과 처리, 배치, 어드민까지 직접 구현했습니다.
+          운영하는 상품입니다. 테이블 설계부터 화면, API, 결제 결과 처리, 배치,
+          어드민, 출시 후 운영까지 맡았고, 프론트엔드 개발자로서 처음 맡은
+          백엔드였습니다.
         </p>
         <div className="flex flex-wrap gap-1.5">
           {["React", "TypeScript", "Kotlin", "Spring", "Django", "MySQL"].map(
@@ -59,6 +60,24 @@ export default function AdSubscribePortfolioPage() {
             ),
           )}
         </div>
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>핵심 성과</SectionLabel>
+        <BulletList
+          items={[
+            "테이블 설계부터 출시 뒤 운영까지 7개 레포 직접 구현 (Kotlin/Spring 5, Django 1, React 1)",
+            "출시 후 3개월 유료 갱신 성공률 96.6%",
+            <>
+              <code>PENDING → ACTIVE/FAILED</code> 상태 전이로, 결제 실패 건이 구독
+              중으로 보이던 문제 해결
+            </>,
+            "손님 앱 배포 없이 선착순 쿠폰 기준을 다운로드에서 실사용으로 전환",
+            "무상 합의를 0원 결제로 처리해 갱신·쿠폰 유지",
+            "출시 후 데이터 대조로 에러 없이 옛 시스템에서 돌던 매장을 찾아 매장별로 처리",
+            "구독 취소 시 환불(외부 호출)을 먼저 실행해, 환불 실패 시 만료·노출 변경이 돌지 않게 처리 (반쯤 취소된 상태 방지)",
+          ]}
+        />
       </section>
 
       <section className="mb-12">
@@ -103,38 +122,19 @@ export default function AdSubscribePortfolioPage() {
       </section>
 
       <section className="mb-12">
-        <SectionLabel>핵심 성과</SectionLabel>
-        <BulletList
-          items={[
-            "테이블 설계부터 출시 뒤 운영까지 7개 레포 직접 구현 (Kotlin/Spring 5, Django 1, React 1)",
-            "유료 구독 90여 개 매장이 사용 중이고, 출시 후 3개월 유료 갱신 성공률 96.6%",
-            <>
-              <code>PENDING → ACTIVE/FAILED</code> 상태 전이로, 결제 실패 건이 구독
-              중으로 보이던 문제 해결
-            </>,
-            "손님 앱 배포 없이 선착순 쿠폰 기준을 다운로드에서 실사용으로 전환",
-            "무상 합의를 0원 결제로 처리해 갱신·쿠폰 유지",
-            "출시 후 데이터 대조로 에러 없이 옛 시스템에서 돌던 매장을 찾아 매장별로 처리",
-            "구독 취소는 환불(외부 호출)을 먼저 실행합니다. 환불이 실패하면 만료·노출 변경이 돌지 않아, 반쯤 취소된 상태가 생기지 않습니다.",
-          ]}
-        />
-      </section>
-
-      <section className="mb-12">
         <SectionLabel>출시 뒤 숫자로 확인한 것</SectionLabel>
         <BulletList
           items={[
-            "결제: 유료 갱신 265건 중 256건 성공(96.6%). 1차 실패 15건 중 6건은 재시도로 회복했고, 9건은 3회 실패로 종료됐습니다.",
-            "결제 대기: 신청부터 결제 결과까지 중앙값 2.8초, p95 7.7초입니다. 30건 중 29건이 10초 안에 확정돼 폴링 10초 기준이 실제 분포와 맞았습니다.",
-            "매장: 사장님이 직접 신청한 26곳 중 12곳은 이전 광고 결제 이력이 없던 매장입니다.",
-            "쿠폰: 손님이 받은 34,445장 중 11,281장이 실제로 쓰였습니다(32.8%). 받아만 두는 쿠폰이 많다는 전제를 숫자로 확인했습니다.",
-            "다음 과제: 갱신 유지율은 기존 매장 95.2%(251건 중 239건), 새로 들어온 매장 68.0%(25건 중 17건)입니다. 표본이 작아 단정할 수 없지만 다음에 먼저 볼 지표입니다.",
+            "결제: 유료 갱신 성공률 96.6%. 1차 결제 실패 건의 40%는 재시도로 회복했고, 나머지는 3회 실패로 종료됐습니다.",
+            "결제 대기: 신청부터 결제 결과까지 중앙값 2.8초, p95 7.7초입니다. 97%가 10초 안에 확정돼 폴링 10초 기준이 실제 분포와 맞았습니다.",
+            "매장: 사장님이 직접 신청한 매장의 46%는 이전 광고 결제 이력이 없던 매장입니다.",
+            "쿠폰: 손님이 받은 쿠폰의 32.8%가 실제로 쓰였습니다. 받아만 두는 쿠폰이 많다는 전제를 숫자로 확인했습니다.",
+            "다음 과제: 갱신 유지율은 기존 매장 95.2%, 새로 들어온 매장 68.0%입니다. 새로 들어온 매장은 표본이 작아 단정할 수 없지만 다음에 먼저 볼 지표입니다.",
             "적지 않은 것: 매출은 출시 뒤 완결된 비교 기간이 2개월뿐이고 대조군이 없어 성과로 적지 않았습니다.",
           ]}
         />
         <p className="mt-4 text-xs leading-relaxed text-gray-500">
-          집계 기준: 2026-08-10 ~ 2026-11-04 결제·쿠폰 이력, 테스트 매장 제외. 유료
-          구독 매장 수는 2026-11-05 기준입니다.
+          집계 기준: 2026-08-10 ~ 2026-11-04 결제·쿠폰 이력, 테스트 매장 제외.
         </p>
       </section>
 
@@ -296,7 +296,7 @@ export default function AdSubscribePortfolioPage() {
             <>
               <code>ref</code>로 같은 틱 중복 신청 차단
             </>,
-            "출시 뒤 실측 중앙값 2.8초, 30건 중 29건이 10초 안에 확정",
+            "출시 뒤 실측 중앙값 2.8초, 97%가 10초 안에 확정",
           ]}
           retrospective={
             <>
@@ -436,7 +436,7 @@ export default function AdSubscribePortfolioPage() {
             </>
           }
           result={[
-            "옛 시스템에서 결제가 도는데 새 구독이 없는 곳을 전수 조회해 48건에서 후보 7곳 확정",
+            "옛 시스템에서 결제가 도는데 새 구독이 없는 곳을 전수 조회해 후보 7곳 확정",
             "이관 기능의 미리 보기로 판정을 먼저 확인했습니다. 2곳 이전, 3곳은 말일 결제 뒤 이전, 2곳은 이용권 결제라 제외",
           ]}
           retrospective={
@@ -464,7 +464,7 @@ export default function AdSubscribePortfolioPage() {
 
       <section className="mb-12">
         <SectionLabel>AI를 쓰는 방식과 틀린 사례</SectionLabel>
-        <p className="text-sm leading-relaxed text-gray-600 mb-4">
+        <p className="text-base leading-relaxed text-gray-600 mb-4">
           로그와 코드 흐름을 읽고 쿼리를 짜는 일은 AI 에이전트에게 맡겼습니다.
           판단과 운영 DB 쓰기는 직접 했습니다. 에이전트의 결론은 아래처럼 틀릴 수
           있어서, 실행 전에 코드나 실제 데이터로 확인합니다.

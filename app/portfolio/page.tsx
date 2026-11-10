@@ -31,11 +31,11 @@ interface Project {
 const projects: Project[] = [
   {
     slug: "ad-subscribe",
-    name: "Ad Subscribe — 사장님 솔루션 광고 구독 풀스택 구축",
+    name: "Ad Subscribe — 김캐디 사장님 광고 구독 풀스택 구축",
     company: "김캐디",
-    period: "2026.06 — 현재",
+    period: "2026.07 — 현재",
     summary:
-      "매장 사장님이 광고를 월 구독으로 신청하고 쿠폰까지 운영하는 상품입니다. 테이블 설계부터 화면, API, 결제 결과 처리, 배치, 어드민까지 7개 레포를 직접 구현하고 출시 뒤 운영까지 맡았습니다. 유료 구독 90여 개 매장이 쓰고 있고, 유료 갱신 성공률은 96.6%입니다.",
+      "매장 사장님이 광고를 월 구독으로 신청하고 쿠폰까지 운영하는 상품입니다. 테이블 설계부터 화면, API, 결제 결과 처리, 배치, 어드민까지 7개 레포를 직접 구현하고 출시 뒤 운영까지 맡았습니다. 출시 후 3개월 유료 갱신 성공률은 96.6%입니다.",
     tags: ["React", "TypeScript", "Kotlin", "Spring", "Django", "MySQL"],
     video: "/videos/ad-subscribe.mp4",
   },
@@ -83,7 +83,7 @@ const projects: Project[] = [
     company: "스마트스코어",
     period: "2024.12 — 2025.06",
     summary:
-      "사내 처음으로 모바일 네트워크 광고를 도입했습니다. 4가지 광고 타입을 한 번에 처리하는 공통 Mixin을 설계해, 다른 앱에서도 import 한 줄로 쓸 수 있게 만들었습니다.",
+      "사내 처음으로 모바일 네트워크 광고를 도입했습니다. 4가지 광고 타입을 한 번에 처리하는 공통 Mixin을 설계해, 사내 다른 개발팀도 광고 위치 번호(idx) 하나로 광고를 호출할 수 있게 만들었습니다.",
     tags: ["Vue2", "Webpack"],
     video: "/videos/mobile-ads.mp4",
   },
