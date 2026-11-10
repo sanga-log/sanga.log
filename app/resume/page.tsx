@@ -44,6 +44,24 @@ function Tag({ children }: { children: React.ReactNode }) {
   );
 }
 
+const CORE_STRENGTHS = [
+  {
+    label: "고객 요구 → 기능 기준",
+    evidence:
+      "선착순 쿠폰 마감 기준을 영업과 비교해 다운로드에서 실사용으로 전환, 출시 후 받은 쿠폰의 32.8%만 쓰여 전제 확인",
+  },
+  {
+    label: "매장별 설정",
+    evidence:
+      "무인 매장 PC 앱 설정을 서버 자동 수신으로 전환, 매장 추가마다 하던 JSON 수정 제거",
+  },
+  {
+    label: "현장 팀 셀프서비스",
+    evidence:
+      "주차장 로그인 설정을 AI 스킬로 영업팀에 넘겨 개발자 수정 13건 → 0건 (공유 후 12주)",
+  },
+] as const;
+
 function Dot() {
   return (
     <span className="mt-[0.6em] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#b7bfd9]" />
@@ -202,12 +220,25 @@ export default function ResumePage() {
         <h1 className="text-6xl font-black tracking-tight text-[#1e1e1e] sm:text-7xl">
           이상아
         </h1>
-        <p className="mt-7 text-base leading-[1.7] text-[#6b7790] sm:text-lg">
-          기술영업 7년을 거쳐 개발자가 됐습니다. 프론트엔드 4년차이고, 지금은
-          김캐디 Product Engineer입니다. 1,000개 넘는 매장이 사용하는 B2B
-          SaaS와 무인 매장 앱에서 고객 문제를 정의하고, 직접 만들어 출시 뒤
-          지표로 확인합니다.
+        <p className="mt-7 break-keep text-base leading-[1.7] text-[#6b7790] sm:text-lg">
+          플랜트 전동기 사양서를 검토하던 기술영업 7년을 거쳐 개발자가
+          됐습니다. 프론트엔드 4년차이고, 지금은 김캐디 Product Engineer로
+          1,000개 넘는 매장이 사용하는 B2B SaaS, 무인 매장 데스크톱 앱, 해외
+          예약 웹을 만듭니다.
         </p>
+        <ul className="mt-6 flex flex-col gap-3">
+          {CORE_STRENGTHS.map(({ label, evidence }) => (
+            <li
+              key={label}
+              className="flex items-start gap-3 break-keep text-sm leading-[1.8] text-[#45536d] sm:text-base"
+            >
+              <Dot />
+              <span>
+                <B>{label}</B>: {evidence}
+              </span>
+            </li>
+          ))}
+        </ul>
         <div className="mt-8 flex items-center gap-4 text-base font-medium">
           <a
             href="https://www.linkedin.com/in/sanga-log"
