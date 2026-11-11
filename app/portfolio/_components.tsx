@@ -33,7 +33,7 @@ export function BulletList({ items }: { items: React.ReactNode[] }) {
       {items.map((item, i) => (
         <li
           key={i}
-          className="text-sm leading-[1.75] text-gray-700 flex items-start gap-2"
+          className="text-base leading-[1.75] text-gray-700 flex items-start gap-2"
         >
           <Dot />
           <span>{item}</span>
@@ -225,7 +225,7 @@ export function CodeSnippet({ filename, code, highlight }: Snippet) {
           </code>
         </pre>
       </div>
-      <p className="text-xs leading-[1.65] text-gray-600 mt-2.5 italic">
+      <p className="text-xs leading-[1.65] text-gray-600 mt-2.5">
         {highlight}
       </p>
     </div>
@@ -287,7 +287,7 @@ export function FlowArrow({ label }: { label?: React.ReactNode }) {
 
 export function FlowAside({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[11px] italic opacity-70 mt-1.5 text-center leading-snug break-words">
+    <p className="text-[11px] opacity-70 mt-1.5 text-center leading-snug break-words">
       {children}
     </p>
   );
@@ -316,7 +316,7 @@ export function Diagram({
         <div className="flex flex-col items-center gap-0">{children}</div>
       </div>
       {caption && (
-        <p className="text-xs leading-[1.65] text-gray-500 mt-2.5 italic">
+        <p className="text-xs leading-[1.65] text-gray-500 mt-2.5">
           {caption}
         </p>
       )}
@@ -350,14 +350,14 @@ export function Decision({
       }
     >
       <div className="flex items-baseline gap-3 mb-2">
-        <span className="text-[11px] font-bold tracking-[0.14em] text-gray-400">
+        <span className="text-[11px] font-bold tracking-[0.14em] text-gray-500">
           결정 {String(number).padStart(2, "0")}
         </span>
       </div>
       <h3 className="text-lg sm:text-xl font-black leading-tight tracking-tight mb-4">
         {title}
       </h3>
-      <div className="text-sm leading-[1.75] text-gray-700 space-y-3">
+      <div className="text-base leading-[1.75] text-gray-700 space-y-3">
         {body}
       </div>
       {diagram && <div className="mt-2">{diagram}</div>}
@@ -378,7 +378,7 @@ export function Decision({
         <h4 className="text-[11px] font-bold tracking-wide text-gray-500 mb-2">
           배운 점
         </h4>
-        <p className="text-sm leading-[1.75] text-gray-600">{retrospective}</p>
+        <p className="text-base leading-[1.75] text-gray-600">{retrospective}</p>
       </div>
     </div>
   );

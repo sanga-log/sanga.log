@@ -1,0 +1,223 @@
+---
+title: "맥 설치본을 하나로 합쳤더니 앱이 0.45초 만에 꺼졌습니다"
+excerpt: "칩별로 나뉜 Electron 맥 설치본을 universal 하나로 합치는 작업이었습니다. 빌드가 세 번 막혔고, 겨우 나온 dmg는 Finder로 복사하면 실행 직후 꺼졌습니다. 원인은 코드가 아니라 한글 파일 이름의 유니코드 형식이었습니다."
+date: "2026-11-04"
+category: "회고"
+tags: ["Electron", "macOS", "electron-builder", "유니코드", "NFC", "NFD", "트러블슈팅"]
+---
+
+## 설치본 두 개를 하나로 합치는 일이었습니다
+
+'김캐디 사장님'은 Electron으로 만든 데스크톱 앱입니다. 사장님들은 주로 Windows에서 쓰시지만, Mac을 쓰시는 사장님도 있어서 그때그때 대응하다 보니 Intel 칩용과 M 칩용 설치본을 따로 만들게 됐습니다. 그러다 보니 새로 빌드할 때마다 같은 작업을 두 번씩 해야 하는 번거로움이 있었습니다.
+
+동료가 두 칩을 한 파일에 담는 universal 빌드로 통일하자고 제안했고, 저도 동의했습니다. electron-builder는 `--mac --universal` 옵션으로 두 칩용 앱을 각각 빌드한 뒤 하나로 병합합니다.
+
+아래 문제는 모두 배포 전 테스트에서 찾았습니다. 크래시도, 용량이 커진 것도 이번 전환이 만든 문제였습니다. 다만 한글 이름을 가진 맥 앱에서 무엇이 깨지는지 찾아간 과정은 남겨 둘 만해서 정리했습니다.
+
+실제 앱 이름은 한글이고, 글에서는 `사장님앱`으로 바꿔 적었습니다.
+
+---
+
+## 빌드가 세 번 막혔습니다
+
+시작하기 전에 설정 두 가지를 먼저 고쳤습니다.
+
+앱에는 외부 시스템과 연동할 때 띄우는 Chromium이 칩별로 들어갑니다. 그런데 맥 `extraResources`에는 arm용만 있어서 intel용을 추가했습니다.
+
+병합 도구(`@electron/universal`)는 두 빌드에 똑같이 들어 있는 실행 파일을 만나면 멈춥니다. 소스를 읽어 보니 두 Chromium이 여기에 걸릴 것이 보여서, 첫 빌드 전에 병합 대상에서 뺐습니다.
+
+```json
+"x64ArchFiles": "Contents/Resources/public/chrome-mac-*/**"
+```
+
+그러고도 빌드는 세 번 막혔습니다.
+
+### 1. asar 병합: pattern is too long
+
+```
+⨯ pattern is too long  failedTask=build
+TypeError: pattern is too long
+```
+
+`react-native` 패키지의 파일 3,514개가 asar 밖으로 풀려 있었고, 병합 도구가 그 목록을 패턴 하나로 이어 붙이다 실패했습니다.
+
+`mergeASARs: false`로 병합을 끄면 오류는 피합니다. 대신 2.3GB asar가 두 벌 들어가 앱이 약 5GB가 됐습니다. 그래서 병합은 그대로 두고, 맥 빌드에서 `react-native`를 제외했습니다.
+
+### 2. git이 무시하는 폴더를 electron-builder는 봅니다
+
+```
+⨯ ENOENT: no such file or directory, open '.../.claude/worktrees/<이름>/.qa-session'
+```
+
+메인 체크아웃에서 빌드하자 이 오류가 났습니다. 프로젝트 안에는 AI 에이전트 작업 폴더가 13개, 33GB 있었습니다. git 제외 목록에는 들어 있었지만 electron-builder는 그 목록을 보지 않습니다. 폴더를 통째로 포장하려다 그 사이 사라진 파일에서 실패했습니다.
+
+맥과 윈도우 설정 양쪽에 `!.claude/**`를 넣었습니다.
+
+### 3. pkg는 한글 경로에서 실패했습니다
+
+```
+pkgbuild: error: Cannot write package to "...".
+(The file "package.bom" couldn't be saved in the folder ...
+```
+
+dmg는 만들어졌는데, 이어지는 pkg 단계에서 빌드가 실패로 끝났습니다. `pkgbuild`가 한글 헬퍼 앱 경로에서 실패했습니다. arm64 단일 빌드도 똑같이 실패해서 universal 때문은 아니었습니다. `pkgbuild` 안에서 왜 실패하는지까지는 확정하지 못했습니다.
+
+pkg는 배포에 쓴 적이 없어서 빌드 타깃에서 뺐습니다. 돌아보면 한글 이름이 말썽을 부린 첫 신호였습니다.
+
+---
+
+## 앱이 0.45초 만에 꺼졌습니다
+
+dmg를 열고 Finder로 앱을 `/Applications`에 끌어다 놓은 뒤 실행했습니다. 앱은 약 0.45초 만에 꺼졌습니다. 화면 코드가 돌기 전이라 앱 로그는 없었고, 남은 것은 크래시 리포트뿐이었습니다.
+
+```
+Exception Type:  EXC_BREAKPOINT (SIGTRAP)
+Termination Reason:  Namespace SIGNAL, Code 5, Trace/BPT trap: 5
+Thread 0 Crashed:: CrBrowserMain
+```
+
+스택 상단은 Electron Framework 안쪽의 v8 심볼이었습니다. 앱 코드에서 찾을 단서는 없었습니다.
+
+### 같은 빌드인데 Finder로 복사한 앱만 꺼졌습니다
+
+빌드 폴더의 앱과 `cp`로 복사한 앱은 정상이었습니다. `/Applications`에 있는 앱만 꺼졌습니다. 파일 118개의 크기, 권한, 링크, 서명을 비교해도 차이가 없었습니다.
+
+그래서 앱 바깥을 의심했습니다. Finder 복사가 덜 끝났다는 표시, 그 경로에서 37일 전부터 돌던 Chromium 프로세스 3개, LaunchServices 등록 정보를 차례로 봤습니다. 재부팅해도 그대로였고, 모두 빗나갔습니다.
+
+### 이름의 바이트가 달랐습니다
+
+크기와 권한이 같아도 파일 이름은 다를 수 있습니다. 한글은 같은 글자를 두 가지 형식으로 저장할 수 있습니다.
+
+| 형식 | "사"를 저장하는 방식 | UTF-8 바이트 |
+|---|---|---|
+| NFC (합쳐진 글자) | U+C0AC | `EC 82 AC` |
+| NFD (풀어 쓴 자모) | U+1109, U+1161 | `E1 84 89 E1 85 A1` |
+
+화면에서는 똑같이 보입니다. 이름의 바이트를 비교해 보니 빌드 폴더의 앱은 NFC, `/Applications`의 앱은 NFD였습니다.
+
+그런데 전부 NFD로 바꾼 사본은 멀쩡히 떴습니다. NFD가 범인은 아니었던 거죠.
+
+여기서 함정도 하나 밟았습니다. 정규화를 구분하지 않는 APFS에서는 NFC 이름을 NFD로 바로 rename해도 무시됩니다. 임시 이름을 거쳐야 실제로 바뀝니다. 이걸 몰라서 초반 재현 테스트 일부는 무효였습니다.
+
+### 파일을 맞바꿔 가며 범위를 좁혔습니다
+
+앱을 얻는 경로도 비교했습니다. zip을 아카이브 유틸리티로 푼 앱은 정상이고, dmg에서 Finder로 복사한 앱만 꺼졌습니다. 이전 배포는 zip이었고, 이번에 dmg로 바꾸면서 생긴 문제였습니다.
+
+zip으로 돌아가면 당장은 피할 수 있었습니다. 그래도 원인을 찾아 dmg로 배포하기로 했습니다.
+
+정상 앱과 꺼지는 앱의 파일을 `mv`로 맞바꿔 가며 어디서 갈리는지 찾았습니다. 범위는 `Helper (GPU).app`, 그 안의 `MacOS` 폴더, 실행 파일 하나까지 좁혀졌습니다. `Info.plist`와 `PkgInfo`는 관계가 없었습니다.
+
+마지막으로 파일 내용과 이름 형식을 엇갈려 조합했습니다.
+
+| 파일 내용 | 이름 형식 | 결과 |
+|---|---|---|
+| 정상 앱의 파일 | NFD | 꺼짐 |
+| 꺼지던 앱의 파일 | NFC | 정상 |
+
+파일 내용이 아니라 이름 형식이 원인이었습니다.
+
+### 폴더와 파일의 형식이 섞여 있었습니다
+
+Finder로 복사한 앱의 이름을 위치별로 보면 이렇습니다.
+
+| 위치 | 형식 |
+|---|---|
+| 최상위 폴더 `사장님앱.app` | NFD |
+| 본체 실행 파일 `Contents/MacOS/사장님앱` | NFD |
+| 헬퍼 폴더 `사장님앱 Helper (GPU).app` | **NFC** |
+| 그 안의 실행 파일 `사장님앱 Helper (GPU)` | NFD |
+
+폴더와 파일이 전부 같은 형식이면 NFC든 NFD든 정상이었고, 섞이면 꺼졌습니다. `cp`, `ditto`, zip은 원래 형식을 그대로 유지해서 섞이지 않았습니다.
+
+Finder가 왜 폴더와 파일을 다르게 저장하는지는 모릅니다. 관찰한 결과만 있습니다. Electron Framework 바이너리에 `Unable to find helper app`과 `CFBundleName` 문자열이 있어서, 헬퍼를 찾는 단계에서 형식이 맞지 않아 실패하는 것으로 보입니다. 이 문구가 실행 로그에 찍힌 것을 본 적은 없어서 이 부분은 추측입니다.
+
+### 앱 안쪽 이름만 영문으로 바꿨습니다
+
+사용자에게 보이는 이름은 그대로 두고 앱 안쪽 이름만 ASCII로 바꾸면 형식이 섞일 일이 없습니다. 패키징 직후에 도는 electron-builder의 `afterPack` 훅을 썼습니다.
+
+```js
+// scripts/afterPack.js (이름은 바꿔 적었습니다)
+const ASCII_NAME = "OwnerApp";
+
+exports.default = async function afterPack(context) {
+  if (context.electronPlatformName !== "darwin") return;
+
+  const productFilename = context.packager.appInfo.productFilename;
+  const contents = path.join(context.appOutDir, `${productFilename}.app`, "Contents");
+  const macOSDir = path.join(contents, "MacOS");
+  if (fs.existsSync(path.join(macOSDir, ASCII_NAME))) return;
+
+  fs.renameSync(path.join(macOSDir, productFilename), path.join(macOSDir, ASCII_NAME));
+  setPlist(path.join(contents, "Info.plist"), "CFBundleExecutable", ASCII_NAME);
+  setPlist(path.join(contents, "Info.plist"), "CFBundleName", ASCII_NAME);
+
+  // 헬퍼 앱 4개도 실행 파일, 폴더, Info.plist를 같은 방식으로 바꿉니다
+};
+```
+
+- 훅은 칩별 빌드에서 돌고 universal 병합 뒤 한 번 더 돌아서, 이미 바뀌었으면 건너뜁니다.
+- `.app` 폴더 이름은 한글로 남겼습니다. 앱 코드가 이 경로로 Chromium을 실행하기 때문입니다.
+- 실행 파일과 헬퍼 이름만 바꾼 첫 시도는 계속 꺼졌습니다. `CFBundleName`까지 바꾼 뒤 세 번 연속 정상이었습니다. 이 차이가 원인인지 따로 나눠 검증하지는 않았습니다.
+
+---
+
+## 1.30GB가 된 설치본
+
+크래시를 고치고 보니 dmg가 1.30GB, 설치 후 용량이 3.1GB였습니다. 이전 칩별 zip은 약 220MB였습니다. 앱 코드를 묶은 `app.asar` 하나가 2.2GB였습니다.
+
+원인은 실행 파일인 Chromium을 CRA의 `public/` 폴더에 둔 구조였습니다.
+
+```
+public/chrome-mac-arm (원본)
+ ├─ CRA 빌드: public/ 전체를 build/로 복사
+ │    └─ electron-builder: build/**/* 를 app.asar에 포장  → 아무도 실행하지 않는 사본
+ └─ extraResources: asar 바깥 Resources/public/으로 복사  → 실제로 실행되는 사본
+```
+
+코드는 asar 바깥 경로만 봅니다. asar 안의 사본은 용량만 차지하고 있었습니다.
+
+제외 규칙을 처음에 `mac.files`에 넣었더니 `build/` 경로에 적용되지 않았습니다. 최상위 `build.files`로 옮겨서 해결했습니다.
+
+```json
+"build": {
+  "files": [
+    "!build/chrome-mac-arm/**",
+    "!build/chrome-mac-intel/**",
+    "!build/chrome-win/**"
+  ]
+}
+```
+
+이 줄은 한 번 지우고 끝나는 작업이 아니라 빌드할 때마다 거르는 필터입니다. CRA는 빌드할 때마다 `public/`을 다시 복사하므로, 이 줄을 지우면 설치본이 다시 커집니다.
+
+asar에서 빠진 양은 약 1.7GB로, Chromium 원본 합계 571MB보다 컸습니다. Chromium 안의 링크가 asar에서 실제 파일로 풀린 것 같은데, 따로 확인하지는 않았습니다.
+
+---
+
+## 결과와 남은 일
+
+| 항목 | 이전 (칩별 zip) | universal, 중복 제거 전 | 최종 |
+|---|---|---|---|
+| 설치 파일 | 2개 | 1개 | 1개 |
+| 다운로드 크기 | 212MB, 227MB | 1.30GB | 546MB |
+| 설치 후 용량 | 측정 안 함 | 3.1GB | 약 1.4GB |
+
+1.30GB에서 546MB로 58% 줄었지만, 이번 전환이 만든 크기를 줄인 값입니다. 이전 칩별 zip과 비교하면 다운로드는 약 2.5배 커졌습니다. 칩 두 벌을 담았기 때문입니다.
+
+이번 작업의 결과는 설치본 2개가 1개가 된 것입니다. 새로 빌드할 때도 명령 한 번이면 됩니다. 사장님은 자기 맥의 칩을 몰라도 되고, 11월 4일 운영 배포 뒤로 사장님 화면의 맥 다운로드 메뉴도 하나가 됐습니다.
+
+확인한 범위는 이렇습니다.
+
+| 환경 | 확인한 것 | 못 한 것 |
+|---|---|---|
+| Apple Silicon 실기기 | dmg 드래그 설치, 실행, 테스트 매장 연동, 앱 안의 arm용 Chromium이 실제로 뜨는 것 | 없음 |
+| Rosetta | 초기 universal 빌드에서 앱과 intel용 Chromium 실행 | 최종 빌드로 다시 확인, 연동 |
+| Intel 실기기 | 없음 | 기기가 없어 설치, 실행, 연동 모두 |
+
+윈도우 설치본에는 같은 구조의 중복이 남아 있습니다. 제외 줄을 넣은 테스트 빌드에서 설치 후 용량은 1.38GB에서 1.12GB로 줄었습니다. 아직 적용하지 않았고, 적용하려면 윈도우 기기에서 연동 테스트가 필요합니다.
+
+---
+
+## 다음에 같은 일을 만나면
+
+설치 테스트는 사용자가 쓰는 방법으로 합니다. `cp`로 복사한 앱은 정상이었고, Finder로 끌어다 놓지 않았다면 이 크래시는 보이지 않았습니다. 같아 보이는 한글 이름은 바이트로 비교합니다. 크기, 권한, 서명이 모두 같아도 이름은 다를 수 있습니다. 그래도 가설이 빗나가면 정상본과 파일을 맞바꿔 봅니다. 파일 하나까지 좁히고 나서야 원인을 설명할 수 있었습니다.

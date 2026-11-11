@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 import {
   SectionLabel,
   B,
@@ -15,22 +14,16 @@ import {
 } from "../_components";
 import { C5A_CODE, C5B_CODE } from "./_snippets";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "모바일 네트워크 광고 시스템 — Portfolio",
   description:
     "사내 처음으로 모바일 네트워크 광고를 도입한 프로젝트. 4가지 광고 타입을 한 번에 처리하는 공통 모듈을 설계한 기록. 의사결정, 트레이드오프, 회고.",
-  alternates: { canonical: `${SITE_URL}/portfolio/mobile-ads` },
-  openGraph: {
-    title: "모바일 네트워크 광고 시스템 — Portfolio",
-    description:
-      "사내 처음으로 모바일 네트워크 광고를 도입한 프로젝트. 4가지 광고 타입을 한 번에 처리하는 공통 모듈을 설계한 기록. 의사결정, 트레이드오프, 회고.",
-    url: `${SITE_URL}/portfolio/mobile-ads`,
-  },
-};
+  path: "/portfolio/mobile-ads",
+});
 
 export default function MobileAdsPortfolioPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
+    <div className="max-w-3xl mx-auto px-6 py-16 break-keep [overflow-wrap:anywhere]">
       <Link
         href="/portfolio"
         className="inline-flex items-center gap-1.5 text-xs font-black tracking-widest uppercase text-gray-400 hover:text-black transition-colors mb-12"
@@ -43,16 +36,49 @@ export default function MobileAdsPortfolioPage() {
         <h1 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight">
           모바일 네트워크 광고 시스템
         </h1>
-        <p className="text-sm leading-relaxed text-gray-500 mt-4 mb-5">
+        <p className="text-base leading-relaxed text-gray-500 mt-4 mb-5">
           사내 처음으로 앱에 모바일 네트워크 광고를 도입했습니다. 4가지 광고
-          타입을 한 번에 처리하는 공통 Mixin을 설계해 다른 앱에서도 쓸 수 있게
-          했습니다.
+          타입을 한 번에 처리하는 공통 Mixin을 설계해 사내 다른 개발팀도 한 줄로
+          광고를 호출할 수 있게 했습니다.
         </p>
         <div className="flex flex-wrap gap-1.5">
           {["Vue2", "Webpack"].map((t) => (
             <Tag key={t}>{t}</Tag>
           ))}
         </div>
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>핵심 성과</SectionLabel>
+        <BulletList
+          items={[
+            "사내 처음으로 모바일 네트워크 광고 도입",
+            <>
+              4가지 광고 타입을 한 번에 처리하는 공통 Mixin. 다른 팀은{" "}
+              <code>idx</code> 한 줄로 광고 호출
+            </>,
+            "광고 로딩 중 포인트 이중 차감 가드로 사용자 손해 차단",
+          ]}
+        />
+      </section>
+
+      <section className="mb-12">
+        <SectionLabel>실제 화면</SectionLabel>
+        <video
+          src="/videos/mobile-ads.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          controls
+          aria-label="출석체크에서 전면 광고와 보상 광고를 보고 보너스 포인트를 받는 앱 화면 녹화"
+          className="w-full h-auto border border-gray-200"
+        />
+        <p className="mt-3 text-xs leading-relaxed text-gray-500">
+          스마트스코어 앱 화면을 녹화했습니다. 광고 소재는 광고 네트워크가 내보낸
+          외부 광고입니다.
+        </p>
       </section>
 
       <section className="mb-12">
@@ -76,20 +102,6 @@ export default function MobileAdsPortfolioPage() {
       </section>
 
       <section className="mb-12">
-        <SectionLabel>핵심 성과</SectionLabel>
-        <BulletList
-          items={[
-            "사내 처음으로 모바일 네트워크 광고 도입",
-            <>
-              4가지 광고 타입을 한 번에 처리하는 공통 Mixin. 다른 팀은{" "}
-              <code>idx</code> 한 줄로 도입
-            </>,
-            "광고 로딩 중 포인트 이중 차감 가드로 사용자 손해 차단",
-          ]}
-        />
-      </section>
-
-      <section className="mb-12">
         <SectionLabel>핵심 의사결정</SectionLabel>
 
         <Decision
@@ -97,16 +109,24 @@ export default function MobileAdsPortfolioPage() {
           title="광고 호출 3단계 분리 — preload / load / open"
           body={
             <>
-              <code>load</code>와 <code>open</code>을 동시에 호출하면 광고가
-              뜨기까지 오래 걸리고, 특히 <code>load</code> 중에 페이지를 벗어나면
-              엉뚱한 페이지에서 <code>open</code>되는 <B>race condition</B>이
-              있었습니다. 그래서 노출 시점보다 한 단계 앞에서 <code>load</code>를
-              호출해 광고를 미리 받아 두는 구조로 바꿨습니다. 즉시 노출이
-              필요하면 홈 진입 때 <B><code>preload</code></B>로, 버튼을 눌러야
-              뜨는 경우엔 페이지 진입 때 <code>load</code>를 호출해 클릭하는 순간
-              바로 <code>open</code>되게 했습니다. 네이티브에서 <code>close</code>를
-              받으면 곧바로 다시 <code>load</code>를 호출해, 다음 광고도 끊김 없이
-              이어지도록 처리했습니다.
+              <p>
+                <code>load</code>와 <code>open</code>을 동시에 호출하면 광고가
+                뜨기까지 오래 걸리고, 특히 <code>load</code> 중에 페이지를
+                벗어나면 엉뚱한 페이지에서 <code>open</code>되는{" "}
+                <B>race condition</B>이 있었습니다.
+              </p>
+              <p>
+                그래서 노출 시점보다 한 단계 앞에서 <code>load</code>를 호출해
+                광고를 미리 받아 두는 구조로 바꿨습니다. 즉시 노출이 필요하면 홈
+                진입 때 <B><code>preload</code></B>로, 버튼을 눌러야 뜨는 경우엔
+                페이지 진입 때 <code>load</code>를 호출해 클릭하는 순간 바로{" "}
+                <code>open</code>되게 했습니다.
+              </p>
+              <p>
+                네이티브에서 <code>close</code>를 받으면 곧바로 다시{" "}
+                <code>load</code>를 호출해, 다음 광고도 끊김 없이 이어지도록
+                처리했습니다.
+              </p>
             </>
           }
           result={[
@@ -134,21 +154,29 @@ export default function MobileAdsPortfolioPage() {
           title="4가지 광고 타입 통합 Mixin — 사내 공통 모듈"
           body={
             <>
-              광고 위치와 기기(AOS/iOS)마다 달라지는{" "}
-              <B>Placement ID를 상수로 통합 관리</B>하고,{" "}
-              <B>
-                4가지 광고 타입(InterstitialImage / InterstitialVideo /
-                RewardVideo / BottomModal)
-              </B>
-              을 한 모듈에서 처리하는 공통 Mixin으로 묶었습니다. Placement ID를
-              각 팀이 직접 들고 있으면 코드가 반복되고 실수 위험도 커지기
-              때문입니다. 타입마다 컴포넌트를 따로 만드는 대신 콜백 액션을
-              매핑하고(<code>RewardVideo</code>는 영상 시청 완료 여부를{" "}
-              <code>status: completed/skipped</code>로 분기), <code>idx</code>{" "}
-              하나만으로 광고를 호출할 수 있게 했습니다. 네이버 광고(NAM)와
-              제3자 비디오 광고 SDK 두 종을 같은 인터페이스로 통합한 것도 같은
-              생각이었습니다. 다른 팀은 <code>idx</code>만 추가하면 광고 호출 코드
-              없이 그대로 가져다 쓸 수 있습니다.
+              <p>
+                광고 위치와 기기(AOS/iOS)마다 달라지는{" "}
+                <B>Placement ID를 상수로 통합 관리</B>하고,{" "}
+                <B>
+                  4가지 광고 타입(InterstitialImage / InterstitialVideo /
+                  RewardVideo / BottomModal)
+                </B>
+                을 한 모듈에서 처리하는 공통 Mixin으로 묶었습니다. Placement
+                ID를 각 팀이 직접 들고 있으면 코드가 반복되고 실수 위험도 커지기
+                때문입니다.
+              </p>
+              <p>
+                타입마다 컴포넌트를 따로 만드는 대신 콜백 액션을
+                매핑하고(<code>RewardVideo</code>는 영상 시청 완료 여부를{" "}
+                <code>status: completed/skipped</code>로 분기),{" "}
+                <code>idx</code> 하나만으로 광고를 호출할 수 있게 했습니다.
+                네이버 광고(NAM)와 제3자 비디오 광고 SDK 두 종을 같은
+                인터페이스로 통합한 것도 같은 생각이었습니다.
+              </p>
+              <p>
+                다른 팀은 <code>idx</code>만 추가하면 광고 호출 코드 없이 그대로
+                가져다 쓸 수 있습니다.
+              </p>
             </>
           }
           diagram={
@@ -212,13 +240,13 @@ export default function MobileAdsPortfolioPage() {
             "4가지 광고 타입 통합 처리 Mixin 모듈",
             "OS·Placement ID 상수화 + 콜백 액션 매핑",
             <>
-              <code>idx</code>만으로 광고 호출 가능. 다른 프로젝트에서 재사용
+              사내 다른 팀도 <code>idx</code>만으로 광고 호출 가능
             </>,
           ]}
           retrospective={
             <>
-              <code>idx</code>만 알면 광고 호출이 끝나는 인터페이스 덕에, 다른
-              앱에서도 import 한 줄로 도입이 끝났습니다. 모듈을 만든 뒤 쓰는
+              <code>idx</code>만 알면 광고 호출이 끝나는 인터페이스라, 사내 다른
+              개발팀도 SDK를 몰라도 한 줄로 광고를 호출할 수 있게 됐습니다. 모듈을 만든 뒤 쓰는
               사람의 인지 부담까지 챙긴 게 자산화의 핵심이었습니다.
             </>
           }
@@ -229,16 +257,24 @@ export default function MobileAdsPortfolioPage() {
           title="포인트 차감 가드 — 광고 로딩 중 중복 클릭"
           body={
             <>
-              앱 안에는 광고 시청이나 미니게임으로 <B>포인트를 모으고</B>, 그
-              포인트를 <B>실제로 쓸 수 있는 캐시로 전환</B>하는 보상 흐름이 있는데,
-              이걸 직접 구현했습니다. 전환 버튼은 5번 클릭마다 전면 비디오 광고가
-              트리거되는 구조였습니다. 그런데 광고가 로딩되는 동안 버튼을 연속으로
-              누르면, <B>광고는 이미 진행 중인데 포인트만 계속 빠져나가는 손해</B>가
-              생겼습니다. 단순히 <code>disabled</code>로 막으면 UX가 불명확해서,
-              광고를 호출할 때 클릭 카운팅을 멈췄다가 네이티브 close
-              콜백(<code>OnInterstitialVideoAdClosed</code>)을 받으면 다시 켜는
-              가드로 해결했습니다. 사용자 입장에선 광고가 도는 동안 추가 차감이
-              0입니다.
+              <p>
+                앱 안에는 광고 시청이나 미니게임으로 <B>포인트를 모으고</B>, 그
+                포인트를 <B>실제로 쓸 수 있는 캐시로 전환</B>하는 보상 흐름이
+                있는데, 이걸 직접 구현했습니다. 전환 버튼은 5번 클릭마다 전면
+                비디오 광고가 트리거되는 구조였습니다.
+              </p>
+              <p>
+                그런데 광고가 로딩되는 동안 버튼을 연속으로 누르면,{" "}
+                <B>광고는 이미 진행 중인데 포인트만 계속 빠져나가는 손해</B>가
+                생겼습니다.
+              </p>
+              <p>
+                단순히 <code>disabled</code>로 막으면 UX가 불명확해서, 광고를
+                호출할 때 클릭 카운팅을 멈췄다가 네이티브 close
+                콜백(<code>OnInterstitialVideoAdClosed</code>)을 받으면 다시 켜는
+                가드로 해결했습니다. 사용자 입장에선 광고가 도는 동안 추가
+                차감이 0입니다.
+              </p>
             </>
           }
           result={[
