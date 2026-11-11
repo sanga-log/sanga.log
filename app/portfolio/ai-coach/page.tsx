@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 import {
   SectionLabel,
   B,
@@ -14,18 +13,12 @@ import {
   FlowAside,
 } from "../_components";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "AI Coach — Portfolio",
   description:
     "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 맡고 상용화 현장 테스트까지 간 기록. 의사결정, 트레이드오프, 회고.",
-  alternates: { canonical: `${SITE_URL}/portfolio/ai-coach` },
-  openGraph: {
-    title: "AI Coach — Portfolio",
-    description:
-      "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 맡고 상용화 현장 테스트까지 간 기록. 의사결정, 트레이드오프, 회고.",
-    url: `${SITE_URL}/portfolio/ai-coach`,
-  },
-};
+  path: "/portfolio/ai-coach",
+});
 
 export default function AICoachPortfolioPage() {
   return (

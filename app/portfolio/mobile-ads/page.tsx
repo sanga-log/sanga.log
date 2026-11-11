@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 import {
   SectionLabel,
   B,
@@ -15,18 +14,12 @@ import {
 } from "../_components";
 import { C5A_CODE, C5B_CODE } from "./_snippets";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "모바일 네트워크 광고 시스템 — Portfolio",
   description:
     "사내 처음으로 모바일 네트워크 광고를 도입한 프로젝트. 4가지 광고 타입을 한 번에 처리하는 공통 모듈을 설계한 기록. 의사결정, 트레이드오프, 회고.",
-  alternates: { canonical: `${SITE_URL}/portfolio/mobile-ads` },
-  openGraph: {
-    title: "모바일 네트워크 광고 시스템 — Portfolio",
-    description:
-      "사내 처음으로 모바일 네트워크 광고를 도입한 프로젝트. 4가지 광고 타입을 한 번에 처리하는 공통 모듈을 설계한 기록. 의사결정, 트레이드오프, 회고.",
-    url: `${SITE_URL}/portfolio/mobile-ads`,
-  },
-};
+  path: "/portfolio/mobile-ads",
+});
 
 export default function MobileAdsPortfolioPage() {
   return (

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 import {
   SectionLabel,
   B,
@@ -14,18 +13,12 @@ import {
   FlowAside,
 } from "../_components";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "국내 공식 웹사이트 개편 — Portfolio",
   description:
     "스마트스코어 국내 공식 웹사이트 전면 개편. LCP 6.6s→0.9s, 도메인 이전 SEO, Zod 폼 검증을 혼자 맡은 기록. 의사결정, 트레이드오프, 회고.",
-  alternates: { canonical: `${SITE_URL}/portfolio/smartscore-web` },
-  openGraph: {
-    title: "국내 공식 웹사이트 개편 — Portfolio",
-    description:
-      "스마트스코어 국내 공식 웹사이트 전면 개편. LCP 6.6s→0.9s, 도메인 이전 SEO, Zod 폼 검증을 혼자 맡은 기록. 의사결정, 트레이드오프, 회고.",
-    url: `${SITE_URL}/portfolio/smartscore-web`,
-  },
-};
+  path: "/portfolio/smartscore-web",
+});
 
 export default function SmartsocreWebPortfolioPage() {
   return (

@@ -9,6 +9,8 @@ import {
   SITE_DESCRIPTION,
   SITE_LOCALE,
   AUTHOR_JSON_LD,
+  OG_IMAGE,
+  OG_IMAGE_PATH,
 } from '@/lib/constants';
 
 export const metadata: Metadata = {
@@ -25,20 +27,13 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: SITE_NAME,
-      },
-    ],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    images: ['/og-image.png'],
+    images: [OG_IMAGE_PATH],
   },
   alternates: {
     types: {

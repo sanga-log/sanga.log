@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 import {
   SectionLabel,
   B,
@@ -16,18 +15,12 @@ import {
 } from "../_components";
 import { PHASE_CODE, POLL_CODE } from "./_snippets";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "광고 구독 풀스택 구축 — Portfolio",
   description:
     "광고 구독 상품을 테이블 설계부터 배치·어드민·운영까지 직접 만든 기록. 의사결정, 트레이드오프, 회고.",
-  alternates: { canonical: `${SITE_URL}/portfolio/ad-subscribe` },
-  openGraph: {
-    title: "광고 구독 풀스택 구축 — Portfolio",
-    description:
-      "광고 구독 상품을 테이블 설계부터 배치·어드민·운영까지 직접 만든 기록. 의사결정, 트레이드오프, 회고.",
-    url: `${SITE_URL}/portfolio/ad-subscribe`,
-  },
-};
+  path: "/portfolio/ad-subscribe",
+});
 
 const BLOG_LINK_CLASS =
   "underline decoration-from-font underline-offset-2 hover:opacity-70";

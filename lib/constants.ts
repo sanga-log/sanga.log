@@ -11,6 +11,14 @@ export const AUTHOR_SAME_AS = [AUTHOR_LINKEDIN_URL, AUTHOR_GITHUB_URL];
 export const SITE_LOCALE = "ko_KR";
 export const OG_IMAGE_PATH = "/og-image.png";
 
+// 링크 미리보기에 쓰는 사이트 공용 이미지
+export const OG_IMAGE = {
+  url: OG_IMAGE_PATH,
+  width: 1200,
+  height: 630,
+  alt: SITE_NAME,
+};
+
 // 글·사이트 JSON-LD에서 함께 쓰는 저자 정보
 export const AUTHOR_JSON_LD = {
   "@type": "Person",

@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 import {
   SectionLabel,
   B,
@@ -15,18 +14,12 @@ import {
 } from "../_components";
 import { C3_CODE, C4A_CODE, C4B_CODE } from "./_snippets";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Kaddie Web — Portfolio",
   description:
     "김캐디의 해외 스크린골프·연습장 예약 B2C 웹. 예약 슬롯 검증, 결제 결과 폴링, 다국어 빌드 파이프라인을 맡은 기록. 의사결정, 트레이드오프, 회고.",
-  alternates: { canonical: `${SITE_URL}/portfolio/kaddie-web` },
-  openGraph: {
-    title: "Kaddie Web — Portfolio",
-    description:
-      "김캐디의 해외 스크린골프·연습장 예약 B2C 웹. 예약 슬롯 검증, 결제 결과 폴링, 다국어 빌드 파이프라인을 맡은 기록. 의사결정, 트레이드오프, 회고.",
-    url: `${SITE_URL}/portfolio/kaddie-web`,
-  },
-};
+  path: "/portfolio/kaddie-web",
+});
 
 export default function KaddieWebPortfolioPage() {
   return (

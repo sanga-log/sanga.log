@@ -1,21 +1,14 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Portfolio",
-  description: "프로젝트별로 풀어야 했던 문제, 내 역할, 의사결정과 그 이유, 결과, 회고를 기록.",
-  alternates: {
-    canonical: `${SITE_URL}/portfolio`,
-  },
-  openGraph: {
-    title: "Portfolio",
-    description: "프로젝트별로 풀어야 했던 문제, 내 역할, 의사결정과 그 이유, 결과, 회고를 기록.",
-    url: `${SITE_URL}/portfolio`,
-  },
-};
+  description:
+    "프로젝트별로 풀어야 했던 문제, 내 역할, 의사결정과 그 이유, 결과, 회고를 기록.",
+  path: "/portfolio",
+});
 
 interface Project {
   slug: string;

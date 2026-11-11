@@ -1,18 +1,12 @@
 import Image from "next/image";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Resume",
-  description: "이상아 이력서. 기술영업 7년을 거쳐 개발자가 된 김캐디 Product Engineer. 고객 문제 정의부터 구현, 출시 후 지표 확인까지 맡습니다.",
-  alternates: {
-    canonical: `${SITE_URL}/resume`,
-  },
-  openGraph: {
-    title: "Resume",
-    description: "이상아 이력서. 기술영업 7년을 거쳐 개발자가 된 김캐디 Product Engineer. 고객 문제 정의부터 구현, 출시 후 지표 확인까지 맡습니다.",
-    url: `${SITE_URL}/resume`,
-  },
-};
+  description:
+    "이상아 이력서. 기술영업 7년을 거쳐 개발자가 된 김캐디 Product Engineer. 고객 문제 정의부터 구현, 출시 후 지표 확인까지 맡습니다.",
+  path: "/resume",
+});
 
 type Accent = "teal" | "blue" | "neutral";
 
