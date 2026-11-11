@@ -203,10 +203,10 @@ export default function ResumePage() {
           이상아
         </h1>
         <p className="mt-7 break-keep text-base leading-[1.7] text-[#6b7790] sm:text-lg">
-          기술영업 7년과 개발 4년차, 고객 요구를 듣는 일과 직접 만드는 일을
-          모두 해 본 Product Engineer입니다. 지금은 1,000개 넘는 매장이
-          사용하는 김캐디 B2B SaaS와 무인 매장 앱에서 고객 문제 정의부터 출시
-          후 지표 검증까지 맡습니다.
+          기술영업 7년과 개발 4년 차, 고객 요구를 듣는 일과 직접 만드는 일을
+          모두 경험한 Product Engineer입니다. 웹·데스크톱(Electron)부터
+          백엔드까지 스택의 경계 없이 다루며, 1,000개 넘는 매장 현장의 요구를
+          기능으로 구현하고 데이터로 성과를 검증합니다.
         </p>
         <div className="mt-8 flex items-center gap-4 text-base font-medium">
           <a
