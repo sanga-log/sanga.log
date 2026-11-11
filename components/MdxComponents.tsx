@@ -16,7 +16,7 @@ const MdxComponents = {
     </div>
   ),
   table: ({ children }: { children: React.ReactNode }) => (
-    <div className="overflow-x-auto my-8">
+    <div className="overflow-x-auto mt-8 mb-2">
       <table className="w-full text-sm border-collapse">{children}</table>
     </div>
   ),
