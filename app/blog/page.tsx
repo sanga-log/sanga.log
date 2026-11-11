@@ -12,13 +12,13 @@ interface PageProps {
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: '프론트엔드 개발, 기술 아티클, 회고를 기록합니다.',
+  description: '만든 기능이 출시 뒤 어떻게 돌아가는지, 무엇을 왜 정했는지 적습니다.',
   alternates: {
     canonical: `${SITE_URL}/blog`,
   },
   openGraph: {
     title: 'Blog',
-    description: '프론트엔드 개발, 기술 아티클, 회고를 기록합니다.',
+    description: '만든 기능이 출시 뒤 어떻게 돌아가는지, 무엇을 왜 정했는지 적습니다.',
     url: `${SITE_URL}/blog`,
   },
 };
