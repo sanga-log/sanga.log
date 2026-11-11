@@ -3,7 +3,13 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_LOCALE } from '@/lib/constants';
+import {
+  SITE_URL,
+  SITE_NAME,
+  SITE_DESCRIPTION,
+  SITE_LOCALE,
+  AUTHOR_JSON_LD,
+} from '@/lib/constants';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -56,6 +62,8 @@ export default function RootLayout({
             name: SITE_NAME,
             url: SITE_URL,
             description: SITE_DESCRIPTION,
+            inLanguage: 'ko-KR',
+            author: AUTHOR_JSON_LD,
           }}
         />
         <Header />
