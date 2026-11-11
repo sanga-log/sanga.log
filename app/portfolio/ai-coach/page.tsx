@@ -17,12 +17,12 @@ import {
 export const metadata: Metadata = {
   title: "AI Coach — Portfolio",
   description:
-    "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 개발·운영한 기록. 의사결정, 트레이드오프, 회고.",
+    "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 맡고 상용화 현장 테스트까지 간 기록. 의사결정, 트레이드오프, 회고.",
   alternates: { canonical: `${SITE_URL}/portfolio/ai-coach` },
   openGraph: {
     title: "AI Coach — Portfolio",
     description:
-      "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 개발·운영한 기록. 의사결정, 트레이드오프, 회고.",
+      "무인 스크린골프 매장에서 고객이 실시간으로 스윙을 분석·코칭받는 Electron 데스크톱 앱. 프로토타입을 이어받아 프론트엔드를 혼자 맡고 상용화 현장 테스트까지 간 기록. 의사결정, 트레이드오프, 회고.",
     url: `${SITE_URL}/portfolio/ai-coach`,
   },
 };
@@ -66,7 +66,7 @@ export default function AICoachPortfolioPage() {
         <SectionLabel>핵심 성과</SectionLabel>
         <BulletList
           items={[
-            "빌드, 배포, 설치를 자동화해 업데이트 때 매장 방문이 없어졌습니다. 5개 테스트 매장에서 운영 중입니다.",
+            "빌드, 배포, 설치를 자동화해 업데이트 때 매장 방문이 없어졌습니다.",
             <>
               main bundle 압축 사이즈 <B>760 KB → 592 KB (22%↓)</B>. 차트
               라이브러리 진입점을 한 파일로 모아 한 화면의 차트가 전 페이지
@@ -191,7 +191,6 @@ export default function AICoachPortfolioPage() {
             "빌드 → S3 업로드 → 매장 PC 설치를 단일 파이프라인으로 통합 (수동 개입 0)",
             "사용자 인터랙션 0건 (Silent 설치 + 자동 재시작)",
             "업데이트 매장 방문 완전 제거 (신규 시뮬레이터 최초 도입 시만 1회 방문)",
-            "5개 테스트 매장 무인 배포·자동 업데이트 가동 중",
           ]}
           retrospective={
             <>
@@ -352,7 +351,7 @@ export default function AICoachPortfolioPage() {
             </>
           }
           result={[
-            "글로벌 1호점(일본) 배포 완료, 현재 테스트 운영 중",
+            "글로벌 1호점(일본) 배포 완료",
             "한국어 / 일본어 / 영어 다국어 구조 설계",
             "언어 전환 시나리오 반복 테스트로 TTS 큐 잔존 버그 발견·해결",
           ]}
