@@ -126,36 +126,6 @@ const serverTimeToFormTime = (time: string): string =>
 
 ---
 
-## DB를 직접 고치면서 생긴 습관
-
-처음엔 DB 툴에서 여러 문장을 한꺼번에 실행했다가, 일부만 실행되거나 두 번 실행되는 일을 겪었습니다. 그 뒤로 습관이 생겼습니다.
-
-- 한 번에 한 문장만
-- 실행 전에 같은 WHERE로 SELECT 해서 건수부터 확인
-- WHERE에 "지금 값" 조건 넣기 (두 번 돌려도 두 번째는 0행)
-- 실행 뒤 affected rows가 예상과 같은지 확인
-- 되돌리는 SQL을 먼저 써 두기
-
-예를 들어 쿠폰 발급 종료일을 늘릴 때는 이런 모양이 됩니다. (테이블·컬럼 이름과 값은 예시입니다)
-
-```sql
--- 1. 같은 WHERE로 먼저 조회해서 건수 확인 (예상: 1행)
-SELECT id, end_date FROM coupon_type
-WHERE id = 42 AND end_date = '2026-08-31';
-
--- 2. "지금 값" 조건을 건 UPDATE (두 번 돌려도 두 번째는 0행)
-UPDATE coupon_type SET end_date = '2026-09-30'
-WHERE id = 42 AND end_date = '2026-08-31';
-
--- 3. 되돌리는 SQL은 실행 전에 미리 써 두기
-UPDATE coupon_type SET end_date = '2026-08-31'
-WHERE id = 42 AND end_date = '2026-09-30';
-```
-
-프론트에선 실수해도 새로고침하면 됐습니다. **DB는 새로고침이 없습니다.**
-
----
-
 ## AI 답도 그대로 믿지 않게 됐습니다
 
 이 작업은 AI와 같이 했습니다. 로그를 읽게 하고, 코드 흐름을 따라가게 하고, 쿼리를 짜게 했습니다. 다만 운영 DB를 고치는 쿼리는 제가 직접 실행했습니다. AI 답을 그대로 믿으면 안 되는 순간이 있었기 때문입니다.
