@@ -45,6 +45,12 @@ export const metadata: Metadata = {
       'application/rss+xml': '/feed.xml',
     },
   },
+  verification: {
+    google: 'oRxru0yydOCAn2sTWqwv3KZT78of4QPrGX82LY8q4lY',
+    other: {
+      'naver-site-verification': '4f6e83d42fb167912096f858b07f5bd127858f8f',
+    },
+  },
 };
 
 export default function RootLayout({
