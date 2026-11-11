@@ -1,5 +1,5 @@
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
-import { SITE_URL, SITE_NAME, AUTHOR_NAME } from '@/lib/constants';
+import { SITE_URL, AUTHOR_NAME_KO, AUTHOR_JSON_LD, OG_IMAGE_PATH } from '@/lib/constants';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -25,20 +25,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
+
+  const postUrl = `${SITE_URL}/blog/${slug}`;
+
+  // openGraph·twitter는 루트 설정과 합쳐지지 않고 통째로 덮어쓰므로, 이미지까지 글마다 다시 넣는다
   return {
     title: post.title,
     description: post.excerpt,
     keywords: post.tags,
     alternates: {
-      canonical: `${SITE_URL}/blog/${slug}`,
+      canonical: postUrl,
     },
     openGraph: {
       type: 'article',
       title: post.title,
       description: post.excerpt,
-      url: `${SITE_URL}/blog/${slug}`,
+      url: postUrl,
       publishedTime: new Date(post.date).toISOString(),
-      authors: [AUTHOR_NAME],
+      ...(post.updated && { modifiedTime: new Date(post.updated).toISOString() }),
+      authors: [AUTHOR_NAME_KO],
+      images: [{ url: OG_IMAGE_PATH, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [OG_IMAGE_PATH],
     },
   };
 }
@@ -49,6 +61,8 @@ export default async function PostPage({ params }: PageProps) {
 
   if (!post) notFound();
 
+  const postUrl = `${SITE_URL}/blog/${slug}`;
+
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <JsonLd
@@ -57,16 +71,17 @@ export default async function PostPage({ params }: PageProps) {
           '@type': 'BlogPosting',
           headline: post.title,
           description: post.excerpt,
+          image: `${SITE_URL}${OG_IMAGE_PATH}`,
           datePublished: new Date(post.date).toISOString(),
-          author: {
-            '@type': 'Person',
-            name: AUTHOR_NAME,
+          dateModified: new Date(post.updated ?? post.date).toISOString(),
+          author: AUTHOR_JSON_LD,
+          publisher: AUTHOR_JSON_LD,
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': postUrl,
           },
-          publisher: {
-            '@type': 'Organization',
-            name: SITE_NAME,
-          },
-          url: `${SITE_URL}/blog/${slug}`,
+          url: postUrl,
+          inLanguage: 'ko-KR',
           keywords: post.tags,
         }}
       />

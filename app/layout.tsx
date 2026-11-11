@@ -1,9 +1,18 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_LOCALE } from '@/lib/constants';
+import {
+  SITE_URL,
+  SITE_NAME,
+  SITE_DESCRIPTION,
+  SITE_LOCALE,
+  AUTHOR_JSON_LD,
+  OG_IMAGE,
+  OG_IMAGE_PATH,
+} from '@/lib/constants';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -19,24 +28,23 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: SITE_NAME,
-      },
-    ],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    images: ['/og-image.png'],
+    images: [OG_IMAGE_PATH],
   },
   alternates: {
     types: {
       'application/rss+xml': '/feed.xml',
+    },
+  },
+  verification: {
+    google: 'oRxru0yydOCAn2sTWqwv3KZT78of4QPrGX82LY8q4lY',
+    other: {
+      'naver-site-verification': '4f6e83d42fb167912096f858b07f5bd127858f8f',
     },
   },
 };
@@ -56,11 +64,14 @@ export default function RootLayout({
             name: SITE_NAME,
             url: SITE_URL,
             description: SITE_DESCRIPTION,
+            inLanguage: 'ko-KR',
+            author: AUTHOR_JSON_LD,
           }}
         />
         <Header />
         <main className="flex-1 bg-white">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

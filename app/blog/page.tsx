@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import type { Metadata } from 'next';
 import { getAllPosts, getAllCategories } from '@/lib/posts';
-import { SITE_URL } from '@/lib/constants';
+import { createPageMetadata } from '@/lib/metadata';
 import { redis } from '@/lib/redis';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -10,18 +9,12 @@ interface PageProps {
   searchParams: Promise<{ category?: string }>;
 }
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: 'Blog',
-  description: '프론트엔드 개발, 기술 아티클, 회고를 기록합니다.',
-  alternates: {
-    canonical: `${SITE_URL}/blog`,
-  },
-  openGraph: {
-    title: 'Blog',
-    description: '프론트엔드 개발, 기술 아티클, 회고를 기록합니다.',
-    url: `${SITE_URL}/blog`,
-  },
-};
+  description:
+    '만든 기능이 출시 뒤 어떻게 돌아가는지, 무엇을 왜 정했는지 적습니다.',
+  path: '/blog',
+});
 
 export default async function BlogPage({ searchParams }: PageProps) {
   const { category } = await searchParams;

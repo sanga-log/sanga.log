@@ -9,6 +9,8 @@ export interface PostMeta {
   title: string;
   excerpt: string;
   date: string;
+  /** 글을 크게 고친 날. 없으면 date를 수정일로 본다 */
+  updated?: string;
   category: string;
   tags?: string[];
 }
@@ -33,6 +35,7 @@ export function getAllPosts(): PostMeta[] {
       title: data.title ?? '',
       excerpt: data.excerpt ?? '',
       date: data.date ?? '',
+      updated: data.updated,
       category: data.category ?? '전체',
       tags: data.tags ?? [],
     } as PostMeta;
@@ -52,6 +55,7 @@ export function getPostBySlug(slug: string): Post | null {
       title: data.title ?? '',
       excerpt: data.excerpt ?? '',
       date: data.date ?? '',
+      updated: data.updated,
       category: data.category ?? '전체',
       tags: data.tags ?? [],
       content,
